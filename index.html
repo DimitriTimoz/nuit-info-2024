@@ -37,12 +37,14 @@
       drawWorld(graphics, heightmap);
       screen.addChild(graphics);
 
-      const texture = await PIXI.Assets.load('https://pixijs.com/assets/bunny.png');
-      const bunny = new PIXI.Sprite(texture);
-      bunny.x = 500;
-      bunny.y = 400;
-      bunny.anchor.set(0.5);
-      const bunnyFish = new Fish(bunny, screen, 3);
+      const baleineTexture = await PIXI.Assets.load('/assets/baleine.png');
+      const baleine = new PIXI.Sprite(baleineTexture);
+      baleine.width *= 0.3;
+      baleine.height *= 0.3;
+      baleine.x = 500;
+      baleine.y = 400;
+      baleine.anchor.set(0.5);
+      new Fish(baleine, screen, 3);
       initFishes(app, heightmap);
 
       // When left key is down, move to the left
