@@ -24,24 +24,35 @@ export class Submarine {
 
     move(keys) {
         console.log(keys);
+        let dx = 0;
+        let dy = 0;
         if (keys.has('ArrowUp')) {
-            console.log('up');
-            this.screen.y += this.speed;
-            // Rotation du sprite
-            this.sprite.rotation = -0.5;
+            dy = 1;
         }
-
         if (keys.has('ArrowDown')) {
-            this.screen.y -= this.speed;
-            this.sprite.rotation = 0.5;
+            dy = -1;
         }
         if (keys.has('ArrowLeft')) {
-            this.screen.x += this.speed;
-            this.sprite.scale.x = -Math.abs(this.sprite.scale.x);
+            dx = 1;
         }
         if (keys.has('ArrowRight')) {
-            this.screen.x -= this.speed;
-            this.sprite.scale.x = Math.abs(this.sprite.scale.x);
+            dx = -1;
+        }
+
+        if (dx != 0 || dy != 0) {
+            let norm = Math.sqrt(dx * dx + dy * dy);
+            let multiplier = this.speed / norm;
+            dx *= multiplier;
+            dy *= multiplier;
+            this.screen.x += dx;
+            this.screen.y += dy;
+            if (dx < 0) {
+                this.sprite.scale.x = Math.abs(this.sprite.scale.x);
+            } else {
+                this.sprite.scale.x = -Math.abs(this.sprite.scale.x);
+            }
+
+
         }
     }
 
