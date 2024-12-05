@@ -15,6 +15,9 @@
 
       await PIXI.Assets.load('assets/ferris.svg');
       let sprite = PIXI.Sprite.from('assets/ferris.svg');
+
+      let submarineX = 0;
+      let submarineY = 0;
     
       app.stage.addChild(sprite);
 
@@ -31,7 +34,7 @@
 
       const graphics = new PIXI.Graphics();
 
-      drawWorld(graphics, depthMap);
+      drawWorld(app, graphics, depthMap, submarineX, submarineY);
 
       app.stage.addChild(graphics);
 
