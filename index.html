@@ -11,6 +11,8 @@
       import { initFishes, Fish } from "/fishes.js";
       import { initBoats, Boat } from "/boats.js";
       import { initKelp } from "/ground.js";
+      
+      import { doInterpolate, linspace } from "/splines/spline.js";
 
       const app = new PIXI.Application();
       app.stage.interactive = true;
@@ -19,6 +21,7 @@
       const screen = new PIXI.Container();
       screen.interactive = true;
       screen.buttonMode = true;
+      screen.x = -500
 
       document.body.appendChild(app.canvas);
 
@@ -27,14 +30,21 @@
       let bullet_asset = await PIXI.Assets.load('assets/bullet.png');
 
       let heightmap = [];
-      for (let y = 0; y < 30; y++) {
-        heightmap.push(-y);
+      
+      const n_points = 300
+      const deepness_scale = 50
+      
+      const ys = [-0, -0, -1, -2, -2, -2, -2, -3, -3, -2, -4, -4, -5, -5, -5, -6, -6.1, -6, -5, -5.4, -5.2, -5., -4, -4, -4.1, -4.2, -4.3, -4.4, -4.5, -6, -6, -6.4, -6.8, -7.2, -7, -7, -6.2, -6.4, -5.6, -5, -5, -4.8, -4, -4, -4, -4, -3.8, -3, -2, -2, -2, -1.8, -1, -0.5, -0.5, -0, -0]
+      const min = 7.2
+      for (let i = 0; i < ys.length; i++) {
+        ys[i] /= min
       }
-      for (let y = 0; y < 10; y++) {
-        heightmap.push(-30);
-      }
-      for (let y = 30; y > 0; y--) {
-        heightmap.push(-y);
+      const xs = linspace(-1, 1, ys.length)
+      let [pxs, pys] = doInterpolate(xs, ys, n_points);
+      
+      
+      for (let i = 0; i < pys.length; i++) {
+        heightmap.push(pys[i]*deepness_scale);
       }
 
       app.stage.addChild(screen);
