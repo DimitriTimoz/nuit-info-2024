@@ -47,6 +47,16 @@ export class Fish {
         let multiplier = this.speed / norm;
         this.vx *= multiplier;
         this.vy *= multiplier;
+
+        if (this.vx < 0) {
+            if (this.sprite.scale.x < 0) {
+                this.sprite.scale.x = -this.sprite.scale.x;
+            }
+        } else {
+            if (this.sprite.scale.x > 0) {
+                this.sprite.scale.x = -this.sprite.scale.x;
+            }
+        }
     }
 
     move(delta) {
