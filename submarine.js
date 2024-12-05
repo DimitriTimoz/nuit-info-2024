@@ -7,7 +7,8 @@ export class Submarine {
         this.app = app;
         this.projectileTexture = projectileTexture;
         this.projectiles = []; // tableau pour stocker les tirs
-
+        this.sprite.scale.x = 0.1;
+        this.sprite.scale.y = 0.1;
         this.set_sprite_middle();
 
         this.app.ticker.add(delta => {
@@ -21,26 +22,26 @@ export class Submarine {
         this.sprite.y = this.app.screen.height / 2;
     }
 
-    move(direction) {
-        switch (direction) {
-            case 'up':
-                this.screen.y += this.speed;
-                // Rotation du sprite
-                this.sprite.rotation = -0.5;
-                break;
-            case 'down':
-                this.screen.y -= this.speed;
-                this.sprite.rotation = 0.5;
-                break;
-            case 'left':
-                this.screen.x += this.speed;
-                this.sprite.scale.x = -1;
-                break;
-            case 'right':
-                this.screen.x -= this.speed;
-                this.sprite.scale.x = 1;   
-                // On déclenche un tir
-                break;
+    move(keys) {
+        console.log(keys);
+        if (keys.has('ArrowUp')) {
+            console.log('up');
+            this.screen.y += this.speed;
+            // Rotation du sprite
+            this.sprite.rotation = -0.5;
+        }
+
+        if (keys.has('ArrowDown')) {
+            this.screen.y -= this.speed;
+            this.sprite.rotation = 0.5;
+        }
+        if (keys.has('ArrowLeft')) {
+            this.screen.x += this.speed;
+            this.sprite.scale.x = -Math.abs(this.sprite.scale.x);
+        }
+        if (keys.has('ArrowRight')) {
+            this.screen.x -= this.speed;
+            this.sprite.scale.x = Math.abs(this.sprite.scale.x);
         }
     }
 
@@ -72,11 +73,6 @@ export class Submarine {
             p.vy += 0.05;
             p.vx *= 0.99;
             p.rotation = Math.atan2(p.vy, p.vx);
-            if (Math.abs(p.vx) < 0.01) {
-                this.app.stage.removeChild(p);
-                this.projectiles.splice(i, 1);
-                return;
-            }
 
             let indice = Math.floor(p.x/20);
             if  (heightmap[indice] == undefined || -heightmap[indice]*20  < p.y) {

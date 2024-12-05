@@ -22,6 +22,7 @@
       document.body.appendChild(app.canvas);
 
       await PIXI.Assets.load('assets/ferris.svg');
+      await PIXI.Assets.load('assets/submarine.png');
       let bullet_asset = await PIXI.Assets.load('assets/bullet.png');
 
       let heightmap = [];
@@ -44,24 +45,28 @@
       initFishes(app, screen);
       initKelp(screen);
 
-      // When left key is down, move to the left
-      window.addEventListener("keydown", function(e) {
-        if (e.key == "ArrowRight") {
-          submarine.move("right");
-        } else if (e.key == "ArrowLeft") {
-          submarine.move("left");
-        } else if (e.key == "ArrowUp") {
-          submarine.move("up");
-        } else if (e.key == "ArrowDown") {
-          submarine.move("down");
-        }
+      const keys = new Set();
+
+      // Add keyboard event listeners
+      window.addEventListener("keydown", (e) => {
+        keys.add(e.key); 
       });
+
+      window.addEventListener("keyup", (e) => {
+        keys.delete(e.key); 
+      });
+
+      app.ticker.add(() => {
+        submarine.move(keys);
+      });
+
+
 
       screen.onmousedown = (e) => {
         let pos  = e.screen;
         submarine.fire(pos.x, pos.y);
       };
-      let submarine_sprite = PIXI.Sprite.from('assets/ferris.svg');
+      let submarine_sprite = PIXI.Sprite.from('assets/submarine.png');
       let submarine = new Submarine(app, screen, submarine_sprite, bullet_asset);
     
       app.stage.addChild(submarine_sprite);
