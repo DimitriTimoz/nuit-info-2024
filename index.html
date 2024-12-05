@@ -11,7 +11,8 @@
       import { initFishes, Fish } from "/fishes.js";
       import { initBoats, Boat } from "/boats.js";
       import { initKelp } from "/ground.js";
-      
+      import { initClouds } from "/clouds.js";
+
       import { doInterpolate, linspace } from "/splines/spline.js";
 
       const app = new PIXI.Application();
@@ -22,6 +23,7 @@
       screen.interactive = true;
       screen.buttonMode = true;
       screen.x = -500
+      app.renderer.background.color = 0xccffff;
 
       document.body.appendChild(app.canvas);
 
@@ -49,12 +51,11 @@
 
       app.stage.addChild(screen);
 
-      const graphics = new PIXI.Graphics();
-      drawWorld(graphics, heightmap);
-      screen.addChild(graphics);
+      drawWorld(screen, heightmap);
       window.heightmap = heightmap;
       initFishes(app, screen);
       initBoats(app, screen);
+      initClouds(app, screen);
       initKelp(screen);
 
       const keys = new Set();
