@@ -26,7 +26,7 @@ export async function initBoats(app, screen) {
         vache.height *= 0.05;
         vache.scale.x = -vache.scale.x;
         vache.x = 20 + Math.random() * (heightmap.length-2) * 20;
-        vache.y = -10;
+        vache.y = -15;
         vache.anchor.set(0.5);
         new Boat(vache, screen, 1);
     }
