@@ -7,14 +7,18 @@
   <body>
     <script type="module">
       import { drawWorld } from "/world.js";
+      import { Submarine } from "/submarine.js";
 
       const app = new PIXI.Application();
       await app.init({ width: 1024, height: 720 });
+      const screen = new PIXI.Container();
+
       document.body.appendChild(app.canvas);
 
       await PIXI.Assets.load('assets/ferris.svg');
       let sprite = PIXI.Sprite.from('assets/ferris.svg');
 
+      let submarine = new Submarine(sprite, screen);
     
       app.stage.addChild(sprite);
 
@@ -31,7 +35,6 @@
         heightmap.push(-y);
       }
 
-      const screen = new PIXI.Container();
       app.stage.addChild(screen);
       screen.x = -(heightmap.length * 20) / 2;
 
@@ -55,13 +58,13 @@
       // When left key is down, move to the left
       window.addEventListener("keydown", function(e) {
         if (e.key == "ArrowRight") {
-          screen.x -= 5;
+          submarine.move("right");
         } else if (e.key == "ArrowLeft") {
-          screen.x += 5;
+          submarine.move("left");
         } else if (e.key == "ArrowUp") {
-          screen.y += 5;
+          submarine.move("up");
         } else if (e.key == "ArrowDown") {
-          screen.y -= 5;
+          submarine.move("down");
         }
       });
 
