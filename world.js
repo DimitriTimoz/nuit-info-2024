@@ -8,6 +8,5 @@ export function drawWorld(graphics, heightmap) {
         }
 
 
-        console.log(x * 20, 0, 20, heightmap[x]*20);
     }
 }

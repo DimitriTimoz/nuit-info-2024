@@ -8,6 +8,7 @@
     <script type="module">
       import { drawWorld } from "/world.js";
       import { Submarine } from "/submarine.js";
+      import { initFishes, Fish } from "/fishes.js";
 
       const app = new PIXI.Application();
       app.stage.interactive = true;
@@ -25,7 +26,7 @@
       for (let y = 0; y < 30; y++) {
         heightmap.push(-y);
       }
-      for (let y = 0; y < 100; y++) {
+      for (let y = 0; y < 0; y++) {
         heightmap.push(-30);
       }
       for (let y = 30; y > 0; y--) {
@@ -33,25 +34,21 @@
       }
 
       app.stage.addChild(screen);
-      screen.x = -(heightmap.length * 20) / 2;
-
-      const texture = await PIXI.Assets.load('https://pixijs.com/assets/bunny.png');
-      const bunny = new PIXI.Sprite(texture);
-      bunny.anchor.set(0.5);
-
-      let fishes = [];
-      fishes.push(bunny);
-
-      for (let i = 0; i < fishes.length; i++) {
-        screen.addChild(fishes[i]);
-      }
 
       const graphics = new PIXI.Graphics();
-
       drawWorld(graphics, heightmap);
-
       screen.addChild(graphics);
-      
+
+      const baleineTexture = await PIXI.Assets.load('/assets/baleine.png');
+      const baleine = new PIXI.Sprite(baleineTexture);
+      baleine.width *= 0.3;
+      baleine.height *= 0.3;
+      baleine.x = 500;
+      baleine.y = 400;
+      baleine.anchor.set(0.5);
+      new Fish(baleine, screen, 3);
+      initFishes(app, heightmap);
+
       // When left key is down, move to the left
       window.addEventListener("keydown", function(e) {
         if (e.key == "ArrowRight") {
