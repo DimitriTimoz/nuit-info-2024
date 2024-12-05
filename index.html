@@ -9,6 +9,7 @@
       import { drawWorld } from "/world.js";
       import { Submarine } from "/submarine.js";
       import { initFishes, Fish } from "/fishes.js";
+      import { initKelp } from "/kelp.js";
 
       const app = new PIXI.Application();
       app.stage.interactive = true;
@@ -40,7 +41,8 @@
       drawWorld(graphics, heightmap);
       screen.addChild(graphics);
       window.heightmap = heightmap;
-      initFishes(app, screen, heightmap);
+      initFishes(app, screen);
+      initKelp(screen);
 
       // When left key is down, move to the left
       window.addEventListener("keydown", function(e) {

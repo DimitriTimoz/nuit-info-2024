@@ -1,8 +1,6 @@
 var fishes = [];
-var heightmap = [];
 
-export async function initFishes(app, screen, heightmap2) {
-    heightmap = heightmap2;
+export async function initFishes(app, screen) {
     app.ticker.add((delta) => {
         for (let fish of fishes) {
             fish.move(delta.deltaTime);
