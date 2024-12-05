@@ -39,7 +39,7 @@
       const graphics = new PIXI.Graphics();
       drawWorld(graphics, heightmap);
       screen.addChild(graphics);
-
+      window.heightmap = heightmap;
       initFishes(app, screen, heightmap);
 
       // When left key is down, move to the left
