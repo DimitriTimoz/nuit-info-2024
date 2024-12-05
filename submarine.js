@@ -5,7 +5,7 @@ export class Submarine {
         this.screen = screen;
         this.speed = 5;
         this.app = app;
-        this.projectileTexture = projectileTexture; // texture du projectile
+        this.projectileTexture = projectileTexture;
         this.projectiles = []; // tableau pour stocker les tirs
 
         this.set_sprite_middle();
@@ -46,8 +46,9 @@ export class Submarine {
 
     fire(x, y) {
         // Création d’un sprite projectile
-        const projectile = new PIXI.Graphics().rect(0, 0, 40, 20)
-            .fill(0xff0000);
+        const projectile = new PIXI.Sprite(this.projectileTexture);
+        projectile.width *= 0.1;
+        projectile.height *= 0.1;
         //projectile.anchor.set(0.5);
         projectile.x = this.sprite.x;
         projectile.y = this.sprite.y;
@@ -59,7 +60,6 @@ export class Submarine {
 
         projectile.vx = Math.cos(angle) * 10;
         projectile.vy = Math.sin(angle) * 10;
-
         this.app.stage.addChild(projectile);
         this.projectiles.push(projectile);
     }
@@ -71,7 +71,7 @@ export class Submarine {
             p.y += p.vy * delta
             p.vy += 0.05;
             p.vx *= 0.99;
-
+            p.rotation = Math.atan2(p.vy, p.vx);
             if (Math.abs(p.vx) < 0.01) {
                 this.app.stage.removeChild(p);
                 this.projectiles.splice(i, 1);

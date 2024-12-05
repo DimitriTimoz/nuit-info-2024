@@ -21,6 +21,7 @@
       document.body.appendChild(app.canvas);
 
       await PIXI.Assets.load('assets/ferris.svg');
+      let bullet_asset = await PIXI.Assets.load('assets/bullet.png');
 
       let heightmap = [];
       for (let y = 0; y < 30; y++) {
@@ -59,7 +60,7 @@
         submarine.fire(pos.x, pos.y);
       };
       let submarine_sprite = PIXI.Sprite.from('assets/ferris.svg');
-      let submarine = new Submarine(app, screen, submarine_sprite, "/assets/bullet.png");
+      let submarine = new Submarine(app, screen, submarine_sprite, bullet_asset);
     
       app.stage.addChild(submarine_sprite);
 
