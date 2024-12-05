@@ -20,6 +20,7 @@
       const screen = new PIXI.Container();
       screen.interactive = true;
       screen.buttonMode = true;
+      app.renderer.background.color = 0xccffff;
 
       document.body.appendChild(app.canvas);
 
@@ -40,9 +41,7 @@
 
       app.stage.addChild(screen);
 
-      const graphics = new PIXI.Graphics();
-      drawWorld(graphics, heightmap);
-      screen.addChild(graphics);
+      drawWorld(screen, heightmap);
       window.heightmap = heightmap;
       initFishes(app, screen);
       initBoats(app, screen);
