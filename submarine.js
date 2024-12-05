@@ -6,7 +6,7 @@ export class Submarine {
         this.speed = 5;
         this.app = app;
         this.projectileTexture = projectileTexture;
-        this.projectiles = []; // tableau pour stocker les tirs
+        window.projectiles = []; // tableau pour stocker les tirs
         this.sprite.scale.x = 0.1;
         this.sprite.scale.y = 0.1;
         this.set_sprite_middle();
@@ -89,12 +89,12 @@ export class Submarine {
         projectile.vx = Math.cos(angle) * 10;
         projectile.vy = Math.sin(angle) * 10;
         this.app.stage.addChild(projectile);
-        this.projectiles.push(projectile);
+        window.projectiles.push(projectile);
     }
 
     updateProjectiles(delta) {
-        for (let i = this.projectiles.length - 1; i >= 0; i--) {
-            const p = this.projectiles[i];
+        for (let i = window.projectiles.length - 1; i >= 0; i--) {
+            const p = window.projectiles[i];
             p.x += p.vx * delta
             p.y += p.vy * delta
             p.vy += 0.05;
@@ -104,7 +104,7 @@ export class Submarine {
             let indice = Math.floor(p.x/20);
             if  (heightmap[indice] == undefined || -heightmap[indice]*20  < p.y) {
                 this.app.stage.removeChild(p);
-                this.projectiles.splice(i, 1);
+                window.projectiles.splice(i, 1);
                 return;
             }
         }
