@@ -69,7 +69,11 @@ export class Boat extends Collidable {
 
     onCollision(object) {
         // Remove the boat from the screen and global array
-        this.sprite.parent.removeChild(this.sprite);
-        boats.splice(boats.indexOf(this), 1);
+        try {
+            this.sprite.parent.removeChild(this.sprite);
+            boats.splice(boats.indexOf(this), 1);    
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
