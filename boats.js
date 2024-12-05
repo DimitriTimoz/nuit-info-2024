@@ -3,7 +3,7 @@ var boats = [];
 
 function findRandomPositionOverWater() {
     let x = Math.random() * heightmap.length * 20;
-    while (heightmap[x] >= 0) {
+    while (-heightmap[Math.floor(x / 20)] <= 0) {
         x = Math.random() * heightmap.length * 20;
     }
     return x;
@@ -25,7 +25,7 @@ export async function initBoats(app, screen) {
         const croisiere = new PIXI.Sprite(croisiereTexture);
         croisiere.width *= 0.5;
         croisiere.height *= 0.5;
-        croisiere.x = findRandomPositionOverWater();
+        croisiere.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
         croisiere.y = -30;
         croisiere.anchor.set(0.5);
         new Boat(croisiere, screen, 2);
