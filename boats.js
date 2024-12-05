@@ -34,9 +34,9 @@ export async function initBoats(app, screen) {
     }
 }
 
-export class Boat {
+export class Boat extends Collidable {
     constructor(sprite, screen, speed) {
-        //super(sprite);
+        super(sprite);
         this.sprite = sprite;
         this.vx = speed; // Set horizontal speed
         boats.push(this); // Add to the global boats array
@@ -57,5 +57,8 @@ export class Boat {
             // Update position if within bounds
             this.sprite.x = newX;
         }
+    }
+
+    onCollision(object) {
     }
 }

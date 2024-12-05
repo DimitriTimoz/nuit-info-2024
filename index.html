@@ -12,6 +12,7 @@
       import { initBoats, Boat } from "/boats.js";
       import { initKelp } from "/ground.js";
       import { initClouds } from "/clouds.js";
+      import { initCollidable } from "/collidable.js";
 
       const app = new PIXI.Application();
       app.stage.interactive = true;
@@ -73,7 +74,7 @@
       let submarine = new Submarine(app, screen, submarine_sprite, bullet_asset);
     
       app.stage.addChild(submarine_sprite);
-
+      initCollidable(app);
     </script>
             
   </body>

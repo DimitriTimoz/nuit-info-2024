@@ -1,6 +1,15 @@
 
 window.collidable_objects = [];
 
+// Check collisions between all collidable objects
+
+
+export async function initCollidable(app) {
+    app.ticker.add((delta) => {
+        Collidable.checkCollisions();
+    });
+}
+
 export class Collidable {
     constructor(sprite) {
         this.sprite = sprite;
@@ -14,6 +23,10 @@ export class Collidable {
                 bullet.onCollision(this);
             }
         }
+    }
+
+    onCollision(object) {
+        throw new Error("Method 'abstractMethod()' must be implemented.");
     }
 
     static checkCollisions() {
