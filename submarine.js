@@ -37,7 +37,13 @@ export class Submarine {
         if (keys.has('ArrowRight')) {
             dx = -1;
         }
-
+        // if (keys.has(' ')) {
+        //     let x = this.sprite.x - this.screen.x - dx * 10;
+        //     let y = this.sprite.y - this.screen.y - dy * 10;
+        //     this.fire(x, y);
+        //     console.log('fire');
+        //     return;
+        // }
 
         if (dx != 0 || dy != 0) {
             let norm = Math.sqrt(dx * dx + dy * dy);
