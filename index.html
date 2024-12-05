@@ -19,6 +19,8 @@
     
       app.stage.addChild(sprite);
 
+
+
       let heightmap = [];
       for (let y = 0; y < 30; y++) {
         heightmap.push(-y);
@@ -33,6 +35,17 @@
       const screen = new PIXI.Container();
       app.stage.addChild(screen);
       screen.x = -(heightmap.length * 20) / 2;
+
+      const texture = await PIXI.Assets.load('https://pixijs.com/assets/bunny.png');
+      const bunny = new PIXI.Sprite(texture);
+      bunny.anchor.set(0.5);
+
+      let fishes = [];
+      fishes.push(bunny);
+
+      for (let i = 0; i < fishes.length; i++) {
+        screen.addChild(fishes[i]);
+      }
 
       const graphics = new PIXI.Graphics();
 
