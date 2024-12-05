@@ -13,17 +13,19 @@ export async function initFishes(app, screen) {
     const baleine = new PIXI.Sprite(baleineTexture);
     baleine.width *= 0.3;
     baleine.height *= 0.3;
-    baleine.x = 500;
-    baleine.y = 400;
+    let [x, y] = findRandomPositionInWater();
+    baleine.x = x;
+    baleine.y = y;
     baleine.anchor.set(0.5);
     new Fish(baleine, screen, 3);
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
         const miniFish = new PIXI.Sprite(fishTexture);
         miniFish.width *= 0.1;
         miniFish.height *= 0.1;
-        miniFish.x = 500;
-        miniFish.y = 400;
+        let [x, y] = findRandomPositionInWater();
+        miniFish.x = x;
+        miniFish.y = y;
         miniFish.anchor.set(0.5);
         new Fish(miniFish, screen, 2);
     }

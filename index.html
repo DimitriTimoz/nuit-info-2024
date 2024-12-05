@@ -16,12 +16,26 @@
 
       import { doInterpolate, linspace } from "/splines/spline.js";
 
+      const n_points = 300
+      const deepness_scale = 50
+
       function isInWater(x, y) {
         let Xidx = Math.floor(x / 20);
         let Yidx = Math.floor(y / 20);
         return !(heightmap[Xidx] == undefined || -heightmap[Xidx] <= Yidx || y < 0);
       }
       window.isInWater = isInWater;
+
+      function findRandomPositionInWater() {
+        let x = Math.random() * heightmap.length * 20;
+        let y = Math.random() * deepness_scale * 20;
+        while (!isInWater(x, y)) {
+          x = Math.random() * heightmap.length * 20;
+          y = Math.random() * deepness_scale * 20;
+        }
+        return [x, y];
+      }
+      window.findRandomPositionInWater = findRandomPositionInWater;
 
       const app = new PIXI.Application();
       app.stage.interactive = true;
@@ -40,9 +54,6 @@
       let bullet_asset = await PIXI.Assets.load('assets/bullet.png');
 
       let heightmap = [];
-      
-      const n_points = 300
-      const deepness_scale = 50
       
       const ys = [-0, -0, -1, -2, -2, -2, -2, -3, -3, -2, -4, -4, -5, -5, -5, -6, -6.1, -6, -5, -5.4, -5.2, -5., -4, -4, -4.1, -4.2, -4.3, -4.4, -4.5, -6, -6, -6.4, -6.8, -7.2, -7, -7, -6.2, -6.4, -5.6, -5, -5, -4.8, -4, -4, -4, -4, -3.8, -3, -2, -2, -2, -1.8, -1, -0.5, -0.5, -0, -0]
       const min = 7.2
