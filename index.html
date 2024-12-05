@@ -19,24 +19,24 @@
     
       app.stage.addChild(sprite);
 
-      let depthMap = [];
+      let heightmap = [];
       for (let y = 0; y < 30; y++) {
-        depthMap.push(y);
+        heightmap.push(-y);
       }
       for (let y = 0; y < 100; y++) {
-        depthMap.push(30);
+        heightmap.push(-30);
       }
       for (let y = 30; y > 0; y--) {
-        depthMap.push(y);
+        heightmap.push(-y);
       }
 
       const screen = new PIXI.Container();
       app.stage.addChild(screen);
-      screen.x = -(depthMap.length * 10) / 2;
+      screen.x = -(heightmap.length * 20) / 2;
 
       const graphics = new PIXI.Graphics();
 
-      drawWorld(graphics, depthMap);
+      drawWorld(graphics, heightmap);
 
       screen.addChild(graphics);
 
