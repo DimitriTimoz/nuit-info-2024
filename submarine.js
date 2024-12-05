@@ -75,12 +75,14 @@ export class Submarine {
             if (Math.abs(p.vx) < 0.01) {
                 this.app.stage.removeChild(p);
                 this.projectiles.splice(i, 1);
+                return;
             }
 
             let indice = Math.floor(p.x/20);
-            if  (heightmap[indice] == undefined || -heightmap[indice] <= Math.floor(p.y/20) || Math.floor(p.y/20) < 0) {
+            if  (heightmap[indice] == undefined || -heightmap[indice]*20  < p.y) {
                 this.app.stage.removeChild(p);
                 this.projectiles.splice(i, 1);
+                return;
             }
         }
     }
