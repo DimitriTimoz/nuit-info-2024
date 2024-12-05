@@ -8,6 +8,7 @@
     <script type="module">
       import { drawWorld } from "/world.js";
       import { Submarine } from "/submarine.js";
+      import { initFishes, Fish } from "/fishes.js";
 
       const app = new PIXI.Application();
       await app.init({ width: 1024, height: 720 });
@@ -23,7 +24,7 @@
       for (let y = 0; y < 30; y++) {
         heightmap.push(-y);
       }
-      for (let y = 0; y < 100; y++) {
+      for (let y = 0; y < 0; y++) {
         heightmap.push(-30);
       }
       for (let y = 30; y > 0; y--) {
@@ -31,24 +32,18 @@
       }
 
       app.stage.addChild(screen);
-      screen.x = -(heightmap.length * 20) / 2;
+
+      const graphics = new PIXI.Graphics();
+      drawWorld(graphics, heightmap);
+      screen.addChild(graphics);
 
       const texture = await PIXI.Assets.load('https://pixijs.com/assets/bunny.png');
       const bunny = new PIXI.Sprite(texture);
+      bunny.x = 500;
+      bunny.y = 400;
       bunny.anchor.set(0.5);
-
-      let fishes = [];
-      fishes.push(bunny);
-
-      for (let i = 0; i < fishes.length; i++) {
-        screen.addChild(fishes[i]);
-      }
-
-      const graphics = new PIXI.Graphics();
-
-      drawWorld(graphics, heightmap);
-
-      screen.addChild(graphics);
+      const bunnyFish = new Fish(bunny, screen, 3, 0);
+      initFishes(app, heightmap);
 
       // When left key is down, move to the left
       window.addEventListener("keydown", function(e) {
