@@ -40,6 +40,19 @@
 
       screen.addChild(graphics);
 
+      // When left key is down, move to the left
+      window.addEventListener("keydown", function(e) {
+        if (e.key == "ArrowRight") {
+          screen.x -= 5;
+        } else if (e.key == "ArrowLeft") {
+          screen.x += 5;
+        } else if (e.key == "ArrowUp") {
+          screen.y += 5;
+        } else if (e.key == "ArrowDown") {
+          screen.y -= 5;
+        }
+      });
+
     </script>
             
   </body>
