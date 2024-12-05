@@ -13,6 +13,7 @@ function findRandomPositionOverWater() {
 var croisiereTexture;
 var vacheTexture;
 var smokeTexture;
+var smokeTexture2;
 
 export async function initBoats(app, screen) {
     // Add movement updates to the ticker
@@ -28,6 +29,7 @@ export async function initBoats(app, screen) {
     croisiereTexture = await PIXI.Assets.load('/assets/croisiere.png');
     vacheTexture = await PIXI.Assets.load('/assets/vache.png');
     smokeTexture = await PIXI.Assets.load('/assets/smoke.png');
+    smokeTexture2 = await PIXI.Assets.load('/assets/smoke2.png');
 
     for (let i = 0; i < 5; i++) {
         // Create and initialize the croisiere boat
@@ -62,7 +64,7 @@ export class Boat extends Collidable {
     }
 
     move(delta, time) {
-        if (this.ty == "croisiere" && (this.lastSmoke == undefined || time - this.lastSmoke > 100)) {
+        if (this.ty == "croisiere" && (this.lastSmoke == undefined || time - this.lastSmoke > 200)) {
             this.lastSmoke = time;
             const smoke = new PIXI.Sprite(smokeTexture);
             smoke.width *= 0.5;
@@ -70,8 +72,17 @@ export class Boat extends Collidable {
             smoke.x = this.sprite.x;
             smoke.y = this.sprite.y - 30;
             smoke.anchor.set(0.5);
-            new Smoke(smoke, this.sprite.parent);
-        }
+            new Smoke(smoke, this.sprite.parent, 1);
+        } else if (this.ty == "vache" && (this.lastSmoke == undefined || time - this.lastSmoke > 2000)) {
+            this.lastSmoke = time;
+            const smoke = new PIXI.Sprite(smokeTexture2);
+            smoke.width *= 0.25;
+            smoke.height *= 0.25;
+            smoke.x = this.sprite.x;
+            smoke.y = this.sprite.y - 10;
+            smoke.anchor.set(0.5);
+            new Smoke(smoke, this.sprite.parent, 0.5);
+        } 
 
         // Calculate new position
         const newX = this.sprite.x + this.vx * delta;
@@ -100,14 +111,15 @@ export class Boat extends Collidable {
 }
 
 export class Smoke {
-    constructor(sprite, screen) {
+    constructor(sprite, screen, speed) {
         this.sprite = sprite;
+        this.speed = speed;
         smokes.push(this);
         screen.addChild(this.sprite);
     }
 
     move(delta) {
-        this.sprite.y -= 1 * delta;
+        this.sprite.y -= this.speed * delta;
         this.sprite.alpha -= 0.01 * delta;
         if (this.sprite.alpha <= 0) {
             this.sprite.parent.removeChild(this.sprite);
