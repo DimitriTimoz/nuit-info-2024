@@ -76,7 +76,12 @@ export class Submarine {
                 this.app.stage.removeChild(p);
                 this.projectiles.splice(i, 1);
             }
-            
+
+            let indice = Math.floor(p.x/20);
+            if  (heightmap[indice] == undefined || -heightmap[indice] <= Math.floor(p.y/20) || Math.floor(p.y/20) < 0) {
+                this.app.stage.removeChild(p);
+                this.projectiles.splice(i, 1);
+            }
         }
     }
 }
