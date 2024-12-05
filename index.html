@@ -11,6 +11,7 @@
       import { initFishes, Fish } from "/fishes.js";
       import { initBoats, Boat } from "/boats.js";
       import { initKelp } from "/ground.js";
+      import { initClouds } from "/clouds.js";
 
       const app = new PIXI.Application();
       app.stage.interactive = true;
@@ -45,6 +46,7 @@
       window.heightmap = heightmap;
       initFishes(app, screen);
       initBoats(app, screen);
+      initClouds(app, screen);
       initKelp(screen);
 
       const keys = new Set();
