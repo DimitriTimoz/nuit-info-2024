@@ -16,11 +16,6 @@
       document.body.appendChild(app.canvas);
 
       await PIXI.Assets.load('assets/ferris.svg');
-      let sprite = PIXI.Sprite.from('assets/ferris.svg');
-
-      let submarine = new Submarine(sprite, screen);
-    
-      app.stage.addChild(sprite);
 
 
 
@@ -67,6 +62,13 @@
           submarine.move("down");
         }
       });
+
+      let submarine_sprite = PIXI.Sprite.from('assets/ferris.svg');
+
+      let submarine = new Submarine(submarine_sprite, screen);
+    
+      app.stage.addChild(submarine_sprite);
+
 
     </script>
             
