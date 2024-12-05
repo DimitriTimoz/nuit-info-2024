@@ -12,7 +12,7 @@ export async function initBoats(app, screen) {
     const croisiereTexture = await PIXI.Assets.load('/assets/croisiere.png');
     const vacheTexture = await PIXI.Assets.load('/assets/vache.png');
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 5; i++) {
         // Create and initialize the croisiere boat
         const croisiere = new PIXI.Sprite(croisiereTexture);
         croisiere.width *= 0.5;
@@ -60,5 +60,8 @@ export class Boat extends Collidable {
     }
 
     onCollision(object) {
+        // Remove the boat from the screen and global array
+        this.sprite.parent.removeChild(this.sprite);
+        boats.splice(boats.indexOf(this), 1);
     }
 }

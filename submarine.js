@@ -1,3 +1,4 @@
+window.projectiles = []; // tableau pour stocker les tirs
 
 export class Submarine {
     constructor(app, screen, sprite, projectileTexture) {
@@ -6,7 +7,6 @@ export class Submarine {
         this.speed = 5;
         this.app = app;
         this.projectileTexture = projectileTexture;
-        window.projectiles = []; // tableau pour stocker les tirs
         this.sprite.scale.x = 0.1;
         this.sprite.scale.y = 0.1;
         this.set_sprite_middle();
@@ -83,6 +83,10 @@ export class Submarine {
         const projectile = new PIXI.Sprite(this.projectileTexture);
         projectile.width *= 0.1;
         projectile.height *= 0.1;
+        projectile.onCollision = (object) => {
+            this.app.stage.removeChild(projectile);
+            window.projectiles.splice(window.projectiles.indexOf(projectile), 1);
+        };
         //projectile.anchor.set(0.5);
         projectile.x = this.sprite.x;
         projectile.y = this.sprite.y;
@@ -96,7 +100,7 @@ export class Submarine {
         projectile.vy = Math.sin(angle) * 10;
         this.app.stage.addChild(projectile);
         window.projectiles.push(projectile);
-    }
+    }   
 
     updateProjectiles(delta) {
         for (let i = window.projectiles.length - 1; i >= 0; i--) {
@@ -108,11 +112,11 @@ export class Submarine {
             p.rotation = Math.atan2(p.vy, p.vx);
 
             let indice = Math.floor(p.x/20);
-            if  (heightmap[indice] == undefined || -heightmap[indice]*20  < p.y) {
+            /*if (heightmap[indice] == undefined || -heightmap[indice]*20  < p.y) {
                 this.app.stage.removeChild(p);
                 window.projectiles.splice(i, 1);
                 return;
-            }
+            }*/
         }
     }
 }

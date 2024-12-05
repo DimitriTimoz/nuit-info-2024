@@ -18,7 +18,12 @@ export class Collidable {
 
     checkCollision() {
         for (let bullet of window.projectiles) {
-            if (this.sprite.getBounds().contains(bullet.sprite.x, bullet.sprite.y)) {
+            let bound = this.sprite.getBounds();
+            if (bound.x < bullet.x + bullet.width && 
+                bound.x + bound.width > bullet.x &&
+                bound.y < bullet.y + bullet.height &&
+                bound.y + bound.height > bullet.y) {
+
                 this.onCollision(bullet);
                 bullet.onCollision(this);
             }
