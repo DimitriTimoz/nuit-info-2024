@@ -61,11 +61,11 @@
       });
 
 
-
       screen.onmousedown = (e) => {
         let pos  = e.screen;
         submarine.fire(pos.x, pos.y);
       };
+      
       let submarine_sprite = PIXI.Sprite.from('assets/submarine.png');
       let submarine = new Submarine(app, screen, submarine_sprite, bullet_asset);
     

@@ -23,7 +23,6 @@ export class Submarine {
     }
 
     move(keys) {
-        console.log(keys);
         let dx = 0;
         let dy = 0;
         if (keys.has('ArrowUp')) {
@@ -48,9 +47,13 @@ export class Submarine {
             this.screen.y += dy;
             if (dx < 0) {
                 this.sprite.scale.x = Math.abs(this.sprite.scale.x);
+                this.sprite.rotation = Math.atan2(dy, dx) + Math.PI;
+
             } else {
                 this.sprite.scale.x = -Math.abs(this.sprite.scale.x);
+                this.sprite.rotation = Math.atan2(dy, dx);
             }
+
 
 
         }
