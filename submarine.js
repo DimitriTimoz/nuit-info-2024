@@ -46,17 +46,20 @@ export class Submarine {
             dy *= multiplier;
 
             // Check collisions
-            let x = this.sprite.x - this.screen.x  + dx;
-            let y = this.sprite.y - this.screen.y + dy;
-            console.log(x, y);
-            
-            // Draw a pixel 
+            let x = this.sprite.x - this.screen.x - dx;
+            let y = this.sprite.y - this.screen.y - dy;
+
+            // Draw a pixel
             let indice = Math.floor(x/20);
-            if (heightmap[indice] == undefined || -heightmap[indice]*20  < y) {
+            if (heightmap[indice] == undefined || -heightmap[indice]*20 <= y) {
                 return;
             }
             this.screen.x += dx;
             this.screen.y += dy;
+            
+            if (this.sprite.y < this.screen.y) {
+                this.screen.y = this.sprite.y;
+            }
             
             if (dx < 0) {
                 this.sprite.scale.x = Math.abs(this.sprite.scale.x);
