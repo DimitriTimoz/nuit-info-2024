@@ -38,13 +38,26 @@ export class Submarine {
             dx = -1;
         }
 
+
         if (dx != 0 || dy != 0) {
             let norm = Math.sqrt(dx * dx + dy * dy);
             let multiplier = this.speed / norm;
             dx *= multiplier;
             dy *= multiplier;
+
+            // Check collisions
+            let x = this.sprite.x - this.screen.x  + dx;
+            let y = this.sprite.y - this.screen.y + dy;
+            console.log(x, y);
+            
+            // Draw a pixel 
+            let indice = Math.floor(x/20);
+            if (heightmap[indice] == undefined || -heightmap[indice]*20  < y) {
+                return;
+            }
             this.screen.x += dx;
             this.screen.y += dy;
+            
             if (dx < 0) {
                 this.sprite.scale.x = Math.abs(this.sprite.scale.x);
                 this.sprite.rotation = Math.atan2(dy, dx) + Math.PI;
@@ -53,9 +66,6 @@ export class Submarine {
                 this.sprite.scale.x = -Math.abs(this.sprite.scale.x);
                 this.sprite.rotation = Math.atan2(dy, dx);
             }
-
-
-
         }
     }
 
