@@ -16,6 +16,13 @@
 
       import { doInterpolate, linspace } from "/splines/spline.js";
 
+      function isInWater(x, y) {
+        let Xidx = Math.floor(x / 20);
+        let Yidx = Math.floor(y / 20);
+        return !(heightmap[Xidx] == undefined || -heightmap[Xidx] <= Yidx || y < 0);
+      }
+      window.isInWater = isInWater;
+
       const app = new PIXI.Application();
       app.stage.interactive = true;
 

@@ -60,10 +60,8 @@ export class Fish {
     move(delta) {
         let newX = this.sprite.x + this.vx * delta;
         let newY = this.sprite.y + this.vy * delta;
-        let newXidx = Math.floor(newX/20);
-        let newYidx = Math.floor(newY/20);
 
-        if (heightmap[newXidx] == undefined || -heightmap[newXidx] <= newYidx || newYidx < 0) {
+        if (!isInWater(newX, newY)) {
             this.changeSteer();
         } else {
             this.sprite.x = newX;
