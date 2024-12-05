@@ -9,6 +9,7 @@
       import { drawWorld } from "/world.js";
       import { Submarine } from "/submarine.js";
       import { initFishes, Fish } from "/fishes.js";
+      import { initBoats, Boat } from "/boats.js";
       import { initKelp } from "/ground.js";
 
       const app = new PIXI.Application();
@@ -43,6 +44,7 @@
       screen.addChild(graphics);
       window.heightmap = heightmap;
       initFishes(app, screen);
+      initBoats(app, screen);
       initKelp(screen);
 
       const keys = new Set();
