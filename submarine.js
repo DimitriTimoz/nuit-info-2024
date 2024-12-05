@@ -56,16 +56,15 @@ export class Submarine {
         let rel_x = x - this.sprite.x;
         let rel_y = y - this.sprite.y;
         const angle = Math.atan2(rel_y, rel_x);
-        console.log(angle, x, rel_y);
+
         projectile.vx = Math.cos(angle) * 10;
         projectile.vy = Math.sin(angle) * 10;
-        console.log(projectile.vx, projectile.vy);
+
         this.app.stage.addChild(projectile);
         this.projectiles.push(projectile);
     }
 
     updateProjectiles(delta) {
-        console.log(this.projectiles.length);
         for (let i = this.projectiles.length - 1; i >= 0; i--) {
             const p = this.projectiles[i];
             p.x += p.vx * delta
