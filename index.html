@@ -1,24 +1,41 @@
 <!doctype html>
 <html>
   <head>
+    <script src="https://pixijs.download/release/pixi.min.js"></script>
   </head>
   <body>
     <h1>Hello PixiJS</h1>
-    <script src="https://pixijs.download/release/pixi.js"></script>
 
     <script type="module">
-        const app = new PIXI.Application();
-        await app.init({ width: 1024, height: 720 });
-        document.body.appendChild(app.canvas);
+      import { drawWorld } from "/world.js";
 
-        await PIXI.Assets.load('assets/ferris.svg');
-        let sprite = PIXI.Sprite.from('assets/ferris.svg');
-      
-        app.stage.addChild(sprite);
+      const app = new PIXI.Application();
+      await app.init({ width: 1024, height: 720 });
+      document.body.appendChild(app.canvas);
 
+      await PIXI.Assets.load('assets/ferris.svg');
+      let sprite = PIXI.Sprite.from('assets/ferris.svg');
+    
+      app.stage.addChild(sprite);
 
+      let depthMap = [];
+      for (let y = 0; y < 30; y++) {
+        depthMap.push(y);
+      }
+      for (let y = 0; y < 100; y++) {
+        depthMap.push(30);
+      }
+      for (let y = 30; y > 0; y--) {
+        depthMap.push(y);
+      }
 
-      </script>
+      const graphics = new PIXI.Graphics();
+
+      drawWorld(graphics, depthMap);
+
+      app.stage.addChild(graphics);
+
+    </script>
             
   </body>
 </html>
