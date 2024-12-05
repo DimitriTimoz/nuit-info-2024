@@ -11,12 +11,21 @@ export function initFishes(app, heightmap2) {
 }
 
 export class Fish {
-    constructor(sprite, screen, vx, vy) {
+    constructor(sprite, screen, speed) {
         this.sprite = sprite;
-        this.vx = vx;
-        this.vy = vy;
+        this.speed = speed;
+        this.changeSteer();
         fishes.push(this);
         screen.addChild(this.sprite);
+    }
+
+    changeSteer() {
+        this.vx = Math.random() - 0.5;
+        this.vy = Math.random() - 0.5;
+        let norm = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+        let multiplier = this.speed / norm;
+        this.vx *= multiplier;
+        this.vy *= multiplier;
     }
 
     move(delta) {
@@ -25,11 +34,8 @@ export class Fish {
         let newXidx = Math.floor(newX/20);
         let newYidx = Math.floor(newY/20);
 
-        if (heightmap[newXidx] == undefined || -heightmap[newXidx] <= newYidx) {
-            let random01 = Math.random();
-            this.vx = random01 - 0.5;
-            this.vy = 1-random01 - 0.5;
-            console.log(`${this.vx}, ${this.vy}`)
+        if (heightmap[newXidx] == undefined || -heightmap[newXidx] <= newYidx || newYidx < 0) {
+            this.changeSteer();
         } else {
             this.sprite.x = newX;
             this.sprite.y = newY;
