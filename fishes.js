@@ -1,13 +1,34 @@
 var fishes = [];
 var heightmap = [];
 
-export function initFishes(app, heightmap2) {
+export async function initFishes(app, screen, heightmap2) {
     heightmap = heightmap2;
     app.ticker.add((delta) => {
         for (let fish of fishes) {
             fish.move(delta.deltaTime);
         }
     });
+
+    const baleineTexture = await PIXI.Assets.load('/assets/baleine.png');
+    const fishTexture = await PIXI.Assets.load('/assets/fish.png');
+
+    const baleine = new PIXI.Sprite(baleineTexture);
+    baleine.width *= 0.3;
+    baleine.height *= 0.3;
+    baleine.x = 500;
+    baleine.y = 400;
+    baleine.anchor.set(0.5);
+    new Fish(baleine, screen, 3);
+
+    for (let i = 0; i < 10; i++) {
+        const miniFish = new PIXI.Sprite(fishTexture);
+        miniFish.width *= 0.1;
+        miniFish.height *= 0.1;
+        miniFish.x = 500;
+        miniFish.y = 400;
+        miniFish.anchor.set(0.5);
+        new Fish(miniFish, screen, 2);
+    }
 }
 
 export class Fish {
