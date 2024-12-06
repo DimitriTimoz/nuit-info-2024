@@ -2,7 +2,7 @@ export function drawWorld(screen, heightmap) {
     // Sky gradient
     const skyGradient = new PIXI.Graphics();
     skyGradient.beginFill(0x87CEEB)
-        .drawRect(0, -1000, heightmap.length * 20, 1000)
+        .drawRect(0, -1000, heightmap.length * 20, 2000)
         .endFill();
     screen.addChild(skyGradient);
 
