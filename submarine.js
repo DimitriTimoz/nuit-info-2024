@@ -12,6 +12,14 @@ export class Submarine {
         this.sprite.x = -this.screen.x + this.app.screen.width / 2;
         this.sprite.y = -this.screen.y + this.app.screen.height / 2;
         this.sprite.anchor.set(0.5);
+        this.dark = new PIXI.Graphics();
+        this.dark.beginFill(0x000000);
+        this.dark.alpha = 0.0;
+        this.dark.drawRect(0, 0, this.app.screen.width*2, this.app.screen.height);
+        this.dark.endFill();
+        this.dark.x = 0;
+        this.dark.y = 0;
+        this.screen.addChild(this.dark);  
     }
 
     move(keys) {
@@ -60,6 +68,9 @@ export class Submarine {
             this.screen.y += dy;
             this.sprite.x -= dx;
             this.sprite.y -= dy;
+            this.dark.x -= dx;
+            this.dark.y -= dy;
+            this.dark.alpha = Math.min(0.5, this.dark.y / 1000); 
 
             if (dx < 0) {
                 this.sprite.scale.x = Math.abs(this.sprite.scale.x);
