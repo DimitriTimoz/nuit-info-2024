@@ -42,7 +42,11 @@ export class Bullet extends Collidable {
     }
 
     onCollision(object) {
-        this.destroy();
+        for (let enemy of this.enenemies) {
+            if (object.me == enemy) {
+                this.destroy();
+            }
+        }
     }
 
     destroy() {
