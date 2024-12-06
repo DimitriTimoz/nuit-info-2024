@@ -50,13 +50,15 @@ export class Submarine {
             dy *= multiplier;
 
             // Check collisions
-            // Draw a pixel
-            let indice = Math.floor(this.sprite.x/20);
-            let y = this.sprite.y;
+            let x = this.sprite.x - dx;
+            let y = this.sprite.y - dy;
+            let indice = Math.floor(x/20);
             if (heightmap[indice] == undefined || -heightmap[indice]*20 <= y) {
                 return;
             }
-            
+
+
+            // Water
             if (y < 0 && dy > 0) {
                 dy = 0;
             }
