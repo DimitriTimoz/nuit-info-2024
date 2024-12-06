@@ -103,12 +103,28 @@
         let y = e.screen.y - app.screen.height/2;
         submarine.fire(x, y);
       };
-            
+
       let submarine_sprite = PIXI.Sprite.from('assets/submarine.png');
       let submarine = new Submarine(app, screen, submarine_sprite, bullet_asset);
     
       screen.addChild(submarine_sprite);
       screen.hitArea = new PIXI.Rectangle(-heightmap.length*20, - app.screen.height*4, heightmap.length*20*2, app.screen.height*8);
+
+      const audio = new Audio('assets/bb-shark.mp3');
+  audio.loop = true; // Permet de jouer la musique en boucle
+  audio.volume = 0.5; // Ajustez le volume si nécessaire
+  audio.play().catch((error) => {
+    console.warn('L\'autoplay a été bloqué par le navigateur. L\'utilisateur doit interagir avec la page pour commencer la lecture.', error);
+  });
+
+  // Astuce pour les navigateurs modernes qui bloquent l'autoplay
+  document.body.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().catch((error) => {
+        console.warn('Lecture échouée après l\'interaction de l\'utilisateur.', error);
+      });
+    }
+  });
 
     </script>
             
