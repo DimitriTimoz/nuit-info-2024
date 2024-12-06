@@ -14,6 +14,7 @@ export class Bullet extends Collidable {
         this.screen = screen;
         this.vx = Math.cos(angle) * 12;
         this.vy = Math.sin(angle) * 12;
+        this.ttl = 500;
 
         screen.addChild(sprite);
 
@@ -31,6 +32,11 @@ export class Bullet extends Collidable {
         let y = this.sprite.y;
         let indice = Math.floor(x / 20);
         if (heightmap[indice] == undefined || -heightmap[indice] * 20 < y) {
+            this.destroy();
+        }
+
+        this.ttl -= delta;
+        if (this.ttl <= 0) {
             this.destroy();
         }
     }
