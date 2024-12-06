@@ -34,9 +34,13 @@ export class Submarine {
 
         this.screen.addChild(this.dark);  
         app.ticker.add((delta) => {
+            this.screen.removeChild(this.dark);
+
+            this.screen.removeC
             let s = new Set();
             s.add("ArrowDown");
             this.move(s, 1*delta.deltaTime, false);
+            this.screen.addChild(this.dark);  
         });
     }
 
@@ -96,7 +100,7 @@ export class Submarine {
             this.dark.y -= dy;
             this.lightMask.x -= dx;
             this.lightMask.y -= dy;
-            this.dark.alpha = Math.min(0.9, this.dark.y / 600); 
+            this.dark.alpha = Math.min(0.8, this.dark.y / 600); 
 
             if (!or) {
                 return;
