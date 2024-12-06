@@ -1,6 +1,6 @@
 import { Collidable } from "./collidable.js";
 var boats = [];
-var smokes = [];
+var simpleObjects = [];
 
 function findRandomPositionOverWater() {
     let x = Math.random() * heightmap.length * 20;
@@ -14,6 +14,7 @@ var croisiereTexture;
 var vacheTexture;
 var smokeTexture;
 var smokeTexture2;
+var trashTexture;
 
 export async function initBoats(app, screen) {
     // Add movement updates to the ticker
@@ -21,7 +22,7 @@ export async function initBoats(app, screen) {
         for (let boat of boats) {
             boat.move(delta.deltaTime, delta.lastTime);
         }
-        for (let smoke of smokes) {
+        for (let smoke of simpleObjects) {
             smoke.move(delta.deltaTime);
         }
     });
@@ -30,6 +31,7 @@ export async function initBoats(app, screen) {
     vacheTexture = await PIXI.Assets.load('/assets/vache.png');
     smokeTexture = await PIXI.Assets.load('/assets/smoke.png');
     smokeTexture2 = await PIXI.Assets.load('/assets/smoke2.png');
+    trashTexture = await PIXI.Assets.load('/assets/trash.png');
 
     for (let i = 0; i < 5; i++) {
         // Create and initialize the croisiere boat
@@ -64,15 +66,26 @@ export class Boat extends Collidable {
     }
 
     move(delta, time) {
-        if (this.ty == "croisiere" && (this.lastSmoke == undefined || time - this.lastSmoke > 200)) {
-            this.lastSmoke = time;
-            const smoke = new PIXI.Sprite(smokeTexture);
-            smoke.width *= 0.5;
-            smoke.height *= 0.5;
-            smoke.x = this.sprite.x;
-            smoke.y = this.sprite.y - 30;
-            smoke.anchor.set(0.5);
-            new Smoke(smoke, this.sprite.parent, 1);
+        if (this.ty == "croisiere") {
+            if (this.lastSmoke == undefined || time - this.lastSmoke > 200) {
+                this.lastSmoke = time;
+                const smoke = new PIXI.Sprite(smokeTexture);
+                smoke.width *= 0.5;
+                smoke.height *= 0.5;
+                smoke.x = this.sprite.x;
+                smoke.y = this.sprite.y - 30;
+                smoke.anchor.set(0.5);
+                new Smoke(smoke, this.sprite.parent, 1);
+            } else if (this.lastTrash == undefined || time - this.lastTrash > 10000) {
+                this.lastTrash = time;
+                const trash = new PIXI.Sprite(trashTexture);
+                trash.width *= 0.1;
+                trash.height *= 0.1;
+                trash.x = this.sprite.x;
+                trash.y = this.sprite.y + 50;
+                trash.anchor.set(0.5);
+                new Trash(trash, this.sprite.parent, 1);
+            }
         } else if (this.ty == "vache" && (this.lastSmoke == undefined || time - this.lastSmoke > 2000)) {
             this.lastSmoke = time;
             const smoke = new PIXI.Sprite(smokeTexture2);
@@ -114,7 +127,7 @@ export class Smoke {
     constructor(sprite, screen, speed) {
         this.sprite = sprite;
         this.speed = speed;
-        smokes.push(this);
+        simpleObjects.push(this);
         screen.addChild(this.sprite);
     }
 
@@ -123,7 +136,24 @@ export class Smoke {
         this.sprite.alpha -= 0.01 * delta;
         if (this.sprite.alpha <= 0) {
             this.sprite.parent.removeChild(this.sprite);
-            smokes.splice(smokes.indexOf(this), 1);
+            simpleObjects.splice(simpleObjects.indexOf(this), 1);
         }
+    }
+}
+
+export class Trash {
+    constructor(sprite, screen, speed) {
+        this.sprite = sprite;
+        this.speed = speed;
+        simpleObjects.push(this);
+        screen.addChild(this.sprite);
+    }
+
+    move(delta) {
+        let nextY = this.sprite.y + this.speed * delta;
+        if (!isInWater(this.sprite.x, nextY + 40)) {
+            simpleObjects.splice(simpleObjects.indexOf(this), 1);
+        }
+        this.sprite.y = nextY;
     }
 }
