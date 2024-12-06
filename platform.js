@@ -8,7 +8,7 @@ function spawnOilRig(screen) {
     const oilRig = new PIXI.Sprite(oilRigTexture);
     oilRig.width *= 0.15;
     oilRig.height *= 0.15;
-    oilRig.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
+    oilRig.x = (30 + Math.random() * (heightmap.length - 60)) * 20;
     oilRig.y = -30;
     oilRig.anchor.set(0.5);
     oilRig.scale.x = Math.abs(oilRig.scale.x) * -1;

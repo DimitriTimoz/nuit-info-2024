@@ -20,7 +20,7 @@ function spawnCroisiereBoat(screen) {
     const croisiere = new PIXI.Sprite(croisiereTexture);
     croisiere.width *= 0.5;
     croisiere.height *= 0.5;
-    croisiere.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
+    croisiere.x = (30 + Math.random() * (heightmap.length - 60)) * 20;
     croisiere.y = -30;
     croisiere.anchor.set(0.5);
     croisiere.scale.x = Math.abs(croisiere.scale.x) * -1; // Ensure proper flip for vache
@@ -31,7 +31,7 @@ function spawnVacheBoat(screen) {
     const vache = new PIXI.Sprite(vacheTexture);
     vache.width *= 0.05;
     vache.height *= 0.05;
-    vache.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
+    vache.x = (30 + Math.random() * (heightmap.length - 60)) * 20;
     vache.y = -15;
     vache.anchor.set(0.5);
     vache.scale.x = Math.abs(vache.scale.x) * -1; // Ensure proper flip for vache
