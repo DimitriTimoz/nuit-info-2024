@@ -34,7 +34,6 @@ export class Collidable {
                 bound.x + bound.width > bound2.x &&
                 bound.y < bound2.y + bound2.height &&
                 bound.y + bound.height > bound2.y) {
-                console.log("Collision detected");
                 obj.onCollision(this); 
                 this.onCollision(obj);
                 collidable_objects[this.me].delete(this);
