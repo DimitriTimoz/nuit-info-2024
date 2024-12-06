@@ -92,9 +92,7 @@ export class Submarine {
         projectile.y = this.sprite.y;
 
         // Get the angle
-        let rel_x = x;
-        let rel_y = y ;
-        const angle = Math.atan2(rel_y, rel_x);
+        const angle = Math.atan2(y, x);
 
         projectile.vx = Math.cos(angle) * 10;
         projectile.vy = Math.sin(angle) * 10;
@@ -113,10 +111,10 @@ export class Submarine {
 
             let x = p.x;
             let y = p.y;
-            console.log(x, y);
             let indice = Math.floor(x/20);
             if (heightmap[indice] == undefined || -heightmap[indice]*20  < y) {
-                this.app.stage.removeChild(p);
+                console.log('collision');
+                this.screen.removeChild(p);
                 window.projectiles.splice(i, 1);
                 return;
             }

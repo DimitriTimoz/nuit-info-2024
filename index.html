@@ -93,9 +93,7 @@
         submarine.move(keys);
       });
 
-
       screen.onmousedown = (e) => {
-        console.log(e);
         let x = e.screen.x - app.screen.width/2;
         let y = e.screen.y - app.screen.height/2;
         submarine.fire(x, y);
