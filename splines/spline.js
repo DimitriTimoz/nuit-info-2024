@@ -89,7 +89,7 @@ export function buildSplineEquations(xs, ys) {
     return [A, b];
 }
 
-import { solve } from "/splines/eqsolve.js";
+import { solve } from "./eqsolve.js";
 
 // doInterpolate uses cubic spline interpolation to create N new points
 // between xs and calculates their ys, returning [pxs, pys] - the (x,y)

@@ -1,4 +1,4 @@
-import { Bullet } from '/bullet.js';
+import { Bullet } from './bullet.js';
 
 export class Submarine {
     constructor(app, screen, sprite, projectileTexture) {

@@ -1,5 +1,5 @@
 
-import { Collidable } from '/collidable.js';
+import { Collidable } from './collidable.js';
 
 let projectiles = new Set();
 
