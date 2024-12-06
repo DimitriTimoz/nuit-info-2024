@@ -16,6 +16,55 @@ var smokeTexture;
 var smokeTexture2;
 var trashTexture;
 
+function spawnCroisiereBoat(screen) {
+    const croisiere = new PIXI.Sprite(croisiereTexture);
+    croisiere.width *= 0.5;
+    croisiere.height *= 0.5;
+    croisiere.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
+    croisiere.y = -30;
+    croisiere.anchor.set(0.5);
+    new Boat(croisiere, screen, 2, "croisiere");
+}
+
+function spawnVacheBoat(screen) {
+    const vache = new PIXI.Sprite(vacheTexture);
+    vache.width *= 0.05;
+    vache.height *= 0.05;
+    vache.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
+    vache.y = -15;
+    vache.anchor.set(0.5);
+    vache.scale.x = Math.abs(vache.scale.x) * -1; // Ensure proper flip for vache
+    new Boat(vache, screen, 1, "vache");
+}
+
+export async function initBoats(app, screen) {
+    // Add movement updates to the ticker
+    let lastSpawn = 0;
+    app.ticker.add((delta) => {
+        if (lastSpawn + 5000 < delta.lastTime) {
+            spawnCroisiereBoat(screen);
+            spawnVacheBoat(screen);
+            lastSpawn = delta.lastTime;
+        }
+        for (let boat of boats) {
+            boat.move(delta.deltaTime, delta.lastTime);
+        }
+        for (let smoke of simpleObjects) {
+            smoke.move(delta.deltaTime);
+        }
+    });
+
+    croisiereTexture = await PIXI.Assets.load('/assets/croisiere.png');
+    vacheTexture = await PIXI.Assets.load('/assets/vache.png');
+    smokeTexture = await PIXI.Assets.load('/assets/smoke.png');
+    smokeTexture2 = await PIXI.Assets.load('/assets/smoke2.png');
+    trashTexture = await PIXI.Assets.load('/assets/trash.png');
+
+    for (let i = 0; i < 5; i++) {
+        spawnCroisiereBoat(screen);
+        spawnVacheBoat(screen);
+    }
+}
 
 export class Boat extends Collidable {
     constructor(sprite, screen, speed, ty) {
