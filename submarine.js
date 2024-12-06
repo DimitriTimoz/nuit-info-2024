@@ -21,7 +21,7 @@ export class Submarine {
         this.dark.y = 0;
         this.lightMask = new PIXI.Graphics();
         this.lightMask.beginFill(0xFFFFFF);
-         this.lightMask.drawRect(0, 0, this.app.screen.width, this.app.screen.height);
+        this.lightMask.drawRect(0, 0, this.app.screen.width, this.app.screen.height);
         this.lightMask.endFill();
         this.lightMask.beginFill(0);
 
@@ -33,9 +33,14 @@ export class Submarine {
         this.dark.mask = this.lightMask;
 
         this.screen.addChild(this.dark);  
+        app.ticker.add((delta) => {
+            let s = new Set();
+            s.add("ArrowDown");
+            this.move(s, 1*delta.deltaTime, false);
+        });
     }
 
-    move(keys) {
+    move(keys, magnitude=undefined, or=true) {
         let dx = 0;
         let dy = 0;
         if (keys.has('ArrowUp')) {
@@ -60,7 +65,10 @@ export class Submarine {
 
         if (dx != 0 || dy != 0) {
             let norm = Math.sqrt(dx * dx + dy * dy);
-            let multiplier = this.speed / norm;
+            if (magnitude == undefined) {
+                magnitude = this.speed;
+            }
+            let multiplier = magnitude / norm;
             dx *= multiplier;
             dy *= multiplier;
 
@@ -71,11 +79,14 @@ export class Submarine {
             if (heightmap[indice] == undefined || -heightmap[indice]*20 <= y) {
                 return;
             }
-
+            
             // Water
             if (y < 0 && dy > 0) {
                 dy = 0;
             }
+
+            
+
            
             this.screen.x += dx;
             this.screen.y += dy;
@@ -87,10 +98,13 @@ export class Submarine {
             this.lightMask.y -= dy;
             this.dark.alpha = Math.min(0.9, this.dark.y / 600); 
 
+            if (!or) {
+                return;
+            }
+
             if (dx < 0) {
                 this.sprite.scale.x = Math.abs(this.sprite.scale.x);
                 this.sprite.rotation = Math.atan2(dy, dx) + Math.PI;
-
             } else {
                 this.sprite.scale.x = -Math.abs(this.sprite.scale.x);
                 this.sprite.rotation = Math.atan2(dy, dx);
