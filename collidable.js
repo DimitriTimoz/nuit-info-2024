@@ -1,4 +1,3 @@
-
 window.collidable_objects = [];
 
 export async function initCollidable(app) {
@@ -15,14 +14,18 @@ export class Collidable {
 
     checkCollision() {
         for (let bullet of window.projectiles) {
+            // Adjust bullet positions relative to the screen
+            let bulletGlobal = bullet.getGlobalPosition();
             let bound = this.sprite.getBounds();
-            if (bound.x < bullet.x + bullet.width && 
-                bound.x + bound.width > bullet.x &&
-                bound.y < bullet.y + bullet.height &&
-                bound.y + bound.height > bullet.y) {
 
+            if (bound.x < bulletGlobal.x + bullet.width && 
+                bound.x + bound.width > bulletGlobal.x &&
+                bound.y < bulletGlobal.y + bullet.height &&
+                bound.y + bound.height > bulletGlobal.y) {
+                console.log("collision");
+                console.log(bound.x, bulletGlobal.x);
                 this.onCollision(bullet);
-                bullet.onCollision(this);
+                bullet.onCollision(this); // Call the bullet's onCollision method
             }
         }
     }

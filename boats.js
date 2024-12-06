@@ -141,8 +141,9 @@ export class Smoke {
     }
 }
 
-export class Trash {
+export class Trash extends Collidable {
     constructor(sprite, screen, speed) {
+        super(sprite);
         this.sprite = sprite;
         this.speed = speed;
         simpleObjects.push(this);
@@ -155,5 +156,15 @@ export class Trash {
             simpleObjects.splice(simpleObjects.indexOf(this), 1);
         }
         this.sprite.y = nextY;
+    }
+
+    onCollision(object) {
+        try {
+            this.sprite.parent.removeChild(this.sprite);
+            simpleObjects.splice(simpleObjects.indexOf(this), 1);    
+        } catch (error) {
+            console.error(error);
+            
+        }
     }
 }

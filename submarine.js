@@ -57,7 +57,6 @@ export class Submarine {
                 return;
             }
 
-
             // Water
             if (y < 0 && dy > 0) {
                 dy = 0;
@@ -68,7 +67,6 @@ export class Submarine {
             this.sprite.x -= dx;
             this.sprite.y -= dy;
 
-            
             if (dx < 0) {
                 this.sprite.scale.x = Math.abs(this.sprite.scale.x);
                 this.sprite.rotation = Math.atan2(dy, dx) + Math.PI;
@@ -96,8 +94,8 @@ export class Submarine {
         // Get the angle
         const angle = Math.atan2(y, x);
 
-        projectile.vx = Math.cos(angle) * 10;
-        projectile.vy = Math.sin(angle) * 10;
+        projectile.vx = Math.cos(angle) * 12;
+        projectile.vy = Math.sin(angle) * 12;
         this.screen.addChild(projectile);
         window.projectiles.push(projectile);
     }   
