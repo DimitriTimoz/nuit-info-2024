@@ -55,11 +55,11 @@ export async function initBoats(app, screen) {
         }
     });
 
-    croisiereTexture = await PIXI.Assets.load('/assets/croisiere.png');
-    vacheTexture = await PIXI.Assets.load('/assets/vache.png');
-    smokeTexture = await PIXI.Assets.load('/assets/smoke.png');
-    smokeTexture2 = await PIXI.Assets.load('/assets/smoke2.png');
-    trashTexture = await PIXI.Assets.load('/assets/trash.png');
+    croisiereTexture = await PIXI.Assets.load('./assets/croisiere.png');
+    vacheTexture = await PIXI.Assets.load('./assets/vache.png');
+    smokeTexture = await PIXI.Assets.load('./assets/smoke.png');
+    smokeTexture2 = await PIXI.Assets.load('./assets/smoke2.png');
+    trashTexture = await PIXI.Assets.load('./assets/trash.png');
 
     for (let i = 0; i < 5; i++) {
         spawnCroisiereBoat(screen);

@@ -62,15 +62,15 @@ export async function initFishes(app, screen) {
         }
     });
 
-    baleineTexture = await PIXI.Assets.load('/assets/baleine.png');
-    fishTexture = await PIXI.Assets.load('/assets/fish.png');
-    fishTexture2 = await PIXI.Assets.load('/assets/fish2.png');
-    fishTexture3 = await PIXI.Assets.load('/assets/fish3.png');
-    fishTexture4 = await PIXI.Assets.load('/assets/fish4.png');
-    fishTexture5 = await PIXI.Assets.load('/assets/fish5.png');
-    fishTexture6 = await PIXI.Assets.load('/assets/fish6.png');
-    fishTexture7 = await PIXI.Assets.load('/assets/fish7.png');
-    fishTexture8 = await PIXI.Assets.load('/assets/fish8.png');
+    baleineTexture = await PIXI.Assets.load('./assets/baleine.png');
+    fishTexture = await PIXI.Assets.load('./assets/fish.png');
+    fishTexture2 = await PIXI.Assets.load('./assets/fish2.png');
+    fishTexture3 = await PIXI.Assets.load('./assets/fish3.png');
+    fishTexture4 = await PIXI.Assets.load('./assets/fish4.png');
+    fishTexture5 = await PIXI.Assets.load('./assets/fish5.png');
+    fishTexture6 = await PIXI.Assets.load('./assets/fish6.png');
+    fishTexture7 = await PIXI.Assets.load('./assets/fish7.png');
+    fishTexture8 = await PIXI.Assets.load('./assets/fish8.png');
 
     const baleine = new PIXI.Sprite(baleineTexture);
     baleine.width *= 0.3;

@@ -7,12 +7,12 @@ export async function initClouds(app, screen) {
         }
     });
 
-    const cloudTexture1 = await PIXI.Assets.load('/assets/cloud1.png');
-    const cloudTexture2 = await PIXI.Assets.load('/assets/cloud2.png');
-    const cloudTexture3 = await PIXI.Assets.load('/assets/cloud3.png');
-    const cloudTexture4 = await PIXI.Assets.load('/assets/cloud4.png');
-    const cloudTexture5 = await PIXI.Assets.load('/assets/cloud5.png');
-    const cloudTexture6 = await PIXI.Assets.load('/assets/cloud6.png');
+    const cloudTexture1 = await PIXI.Assets.load('./assets/cloud1.png');
+    const cloudTexture2 = await PIXI.Assets.load('./assets/cloud2.png');
+    const cloudTexture3 = await PIXI.Assets.load('./assets/cloud3.png');
+    const cloudTexture4 = await PIXI.Assets.load('./assets/cloud4.png');
+    const cloudTexture5 = await PIXI.Assets.load('./assets/cloud5.png');
+    const cloudTexture6 = await PIXI.Assets.load('./assets/cloud6.png');
 
     for (let i = 0; i < 100; i++) {
         let randomTexture;

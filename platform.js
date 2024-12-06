@@ -36,7 +36,7 @@ export async function initOilRigs(app, screen) {
         }
     });
 
-    oilRigTexture = await PIXI.Assets.load('/assets/oil-rig.png');
+    oilRigTexture = await PIXI.Assets.load('./assets/oil-rig.png');
 
     for (let i = 0; i < 5; i++) {
         spawnOilRig(screen);

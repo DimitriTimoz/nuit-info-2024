@@ -1,15 +1,15 @@
 let groundStuff = [];
 
 export async function initKelp(screen) {
-    const kelpTexture = await PIXI.Assets.load('/assets/kelp.png');
-    const kelpTexture2 = await PIXI.Assets.load('/assets/kelp2.png');
-    const coralTexture = await PIXI.Assets.load('/assets/corail1.png');
-    const coralTexture2 = await PIXI.Assets.load('/assets/corail2.png');
-    const treesTexture = await PIXI.Assets.load('/assets/trees.png');
-    const hutTexture = await PIXI.Assets.load('/assets/hut.png');
+    const kelpTexture = await PIXI.Assets.load('./assets/kelp.png');
+    const kelpTexture2 = await PIXI.Assets.load('./assets/kelp2.png');
+    const coralTexture = await PIXI.Assets.load('./assets/corail1.png');
+    const coralTexture2 = await PIXI.Assets.load('./assets/corail2.png');
+    const treesTexture = await PIXI.Assets.load('./assets/trees.png');
+    const hutTexture = await PIXI.Assets.load('./assets/hut.png');
 
-    // const rockTexture = await PIXI.Assets.load('/assets/rock1.png');
-    // const rockTexture2 = await PIXI.Assets.load('/assets/rock2.png');
+    // const rockTexture = await PIXI.Assets.load('./assets/rock1.png');
+    // const rockTexture2 = await PIXI.Assets.load('./assets/rock2.png');
 
     // for (let i = 0; i < heightmap.length; i++) {
     //     if (Math.random() < 0.9) {
