@@ -19,6 +19,21 @@ export class Submarine {
         this.dark.endFill();
         this.dark.x = 0;
         this.dark.y = 0;
+        this.lightMask = new PIXI.Graphics();
+        this.lightMask.beginFill(0xFFFFFF);
+         this.lightMask.drawRect(0, 0, this.app.screen.width, this.app.screen.height);
+        this.lightMask.endFill();
+        this.lightMask.beginFill(0);
+
+        this.lightMask.drawCircle(this.app.screen.width / 2, this.app.screen.height / 2, 200);
+        this.lightMask.cut();
+    //    this.lightMask.drawCircle(this.app.screen.width / 2, this.app.screen.height / 2, 200);
+        this.lightMask.endFill();
+        this.updateLightMask();
+
+        // Apply the mask to the dark overlay
+        this.dark.mask = this.lightMask;
+
         this.screen.addChild(this.dark);  
     }
 
@@ -70,7 +85,9 @@ export class Submarine {
             this.sprite.y -= dy;
             this.dark.x -= dx;
             this.dark.y -= dy;
-            this.dark.alpha = Math.min(0.5, this.dark.y / 1000); 
+            this.lightMask.x -= dx;
+            this.lightMask.y -= dy;
+            this.dark.alpha = Math.min(0.9, this.dark.y / 600); 
 
             if (dx < 0) {
                 this.sprite.scale.x = Math.abs(this.sprite.scale.x);
