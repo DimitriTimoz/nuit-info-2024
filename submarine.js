@@ -113,7 +113,6 @@ export class Submarine {
             let y = p.y;
             let indice = Math.floor(x/20);
             if (heightmap[indice] == undefined || -heightmap[indice]*20  < y) {
-                console.log('collision');
                 this.screen.removeChild(p);
                 window.projectiles.splice(i, 1);
                 return;
