@@ -3,6 +3,9 @@ let groundStuff = [];
 export async function initKelp(screen) {
     const kelpTexture = await PIXI.Assets.load('./assets/kelp.png');
     const kelpTexture2 = await PIXI.Assets.load('./assets/kelp2.png');
+    const kelpTexture3 = await PIXI.Assets.load('./assets/kelp3.png');
+    const kelpTexture4 = await PIXI.Assets.load('./assets/kelp4.png');
+    const kelpTexture5 = await PIXI.Assets.load('./assets/kelp5.png');
     const coralTexture = await PIXI.Assets.load('./assets/corail1.png');
     const coralTexture2 = await PIXI.Assets.load('./assets/corail2.png');
     const treesTexture = await PIXI.Assets.load('./assets/trees.png');
@@ -33,7 +36,23 @@ export async function initKelp(screen) {
         } else if (-20 <= heightmap[i] && heightmap[i] <= -10) {
             randomTexture = Math.random() > 0.5 ? coralTexture : coralTexture2;
         } else {
-            randomTexture = Math.random() > 0.5 ? kelpTexture : kelpTexture2;
+            switch (Math.floor(Math.random() * 5)) {
+                case 0:
+                    randomTexture = kelpTexture;
+                    break;
+                case 1:
+                    randomTexture = kelpTexture2;
+                    break;
+                case 2:
+                    randomTexture = kelpTexture3;
+                    break;
+                case 3:
+                    randomTexture = kelpTexture4;
+                    break;
+                case 4:
+                    randomTexture = kelpTexture5;
+                    break;
+            }
         }
         const stuff = new PIXI.Sprite(randomTexture);
         stuff.width = 40;
