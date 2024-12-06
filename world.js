@@ -27,7 +27,7 @@ export function drawWorld(screen, heightmap) {
     // Ground with gradient
     const groundGraphics = new PIXI.Graphics();
     for (let x = 0; x < heightmap.length; x++) {
-        const groundColor = heightmap[x] <= 0 ? 0x3d2b1f : 0x355e3b;
+        const groundColor = heightmap[x] <= 0 ? 0x3d2b1f : 0x3d2b1f;
         const alpha = heightmap[x] <= 0 ? 1 : 0.9;
         groundGraphics.beginFill(groundColor, alpha)
             .drawRect(x * 20, -heightmap[x]*20, 20, 1000000)
