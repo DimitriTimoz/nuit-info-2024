@@ -14,7 +14,7 @@ export async function initClouds(app, screen) {
     const cloudTexture5 = await PIXI.Assets.load('/assets/cloud5.png');
     const cloudTexture6 = await PIXI.Assets.load('/assets/cloud6.png');
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 100; i++) {
         let randomTexture;
         switch (Math.floor(Math.random() * 6)) {
             case 0:
@@ -40,7 +40,7 @@ export async function initClouds(app, screen) {
         cloud.width *= 0.5;
         cloud.height *= 0.5;
         cloud.x = Math.random() * heightmap.length * 20;
-        cloud.y = Math.random()*-200 - 200;
+        cloud.y = Math.random()*-120 - 180;
         new Cloud(cloud, screen, Math.random() * 0.5 + 1.0);
     }
 }
