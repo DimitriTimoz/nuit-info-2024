@@ -1,6 +1,6 @@
 import { Collidable } from "./collidable.js";
-window.boats = [];
-window.simpleObjects = [];
+var boats = [];
+var simpleObjects = [];
 
 function findRandomPositionOverWater() {
     let x = Math.random() * heightmap.length * 20;
