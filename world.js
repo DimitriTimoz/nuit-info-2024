@@ -10,7 +10,7 @@ export function drawWorld(screen, heightmap) {
     const seaGraphics = new PIXI.Graphics();
     const gradient = new PIXI.Graphics();
     gradient.beginFill(0x006994, 0.6)
-        .drawRect(0, 0, heightmap.length * 20, 1000)
+        .drawRect(0, 0, heightmap.length * 20, 2000)
         .endFill();
     
     for (let x = 0; x < heightmap.length; x++) {
