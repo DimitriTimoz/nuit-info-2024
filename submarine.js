@@ -111,12 +111,14 @@ export class Submarine {
             p.vx *= 0.99;
             p.rotation = Math.atan2(p.vy, p.vx);
 
-            let indice = Math.floor(p.x/20);
-            /*if (heightmap[indice] == undefined || -heightmap[indice]*20  < p.y) {
+            let x = p.x - this.screen.x ;
+            let y = p.y - this.screen.y;
+            let indice = Math.floor(x/20);
+            if (heightmap[indice] == undefined || -heightmap[indice]*20  < y) {
                 this.app.stage.removeChild(p);
                 window.projectiles.splice(i, 1);
                 return;
-            }*/
+            }
         }
     }
 }

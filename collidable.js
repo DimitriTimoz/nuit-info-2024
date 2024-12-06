@@ -1,9 +1,6 @@
 
 window.collidable_objects = [];
 
-// Check collisions between all collidable objects
-
-
 export async function initCollidable(app) {
     app.ticker.add((delta) => {
         Collidable.checkCollisions();

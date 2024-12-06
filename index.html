@@ -103,7 +103,7 @@
       let submarine = new Submarine(app, screen, submarine_sprite, bullet_asset);
     
       app.stage.addChild(submarine_sprite);
-      screen.hitArea = new PIXI.Rectangle(0, - app.screen.height, heightmap.length*20, app.screen.height*2);
+      screen.hitArea = new PIXI.Rectangle(-heightmap.length*20, - app.screen.height*4, heightmap.length*20*2, app.screen.height*8);
 
       initCollidable(app);
     </script>
