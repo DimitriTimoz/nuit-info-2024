@@ -1,3 +1,5 @@
+import { Bullet } from '/bullet.js';
+
 window.projectiles = []; // tableau pour stocker les tirs
 
 export class Submarine {
@@ -17,8 +19,6 @@ export class Submarine {
             this.updateProjectiles(delta.deltaTime);
         } );
     }
-
-
 
     move(keys) {
         let dx = 0;
@@ -79,44 +79,13 @@ export class Submarine {
     }
 
     fire(x, y) {
-        // Création d’un sprite projectile
-        const projectile = new PIXI.Sprite(this.projectileTexture);
-        projectile.width *= 0.1;
-        projectile.height *= 0.1;
-        projectile.onCollision = (object) => {
-            this.screen.removeChild(projectile);
-            window.projectiles.splice(window.projectiles.indexOf(projectile), 1);
-        };
-        projectile.anchor.set(0.5);
-        projectile.x = this.sprite.x 
-        projectile.y = this.sprite.y;
-
-        // Get the angle
-        const angle = Math.atan2(y, x);
-
-        projectile.vx = Math.cos(angle) * 12;
-        projectile.vy = Math.sin(angle) * 12;
-        this.screen.addChild(projectile);
-        window.projectiles.push(projectile);
+        let angle = Math.atan2(y, x);
+        new Bullet(this.screen, this.projectileTexture, this.sprite.x, this.sprite.y,  angle);
     }   
 
     updateProjectiles(delta) {
         for (let i = window.projectiles.length - 1; i >= 0; i--) {
-            const p = window.projectiles[i];
-            p.x += p.vx * delta
-            p.y += p.vy * delta
-            p.vy += 0.05;
-            p.vx *= 0.99;
-            p.rotation = Math.atan2(p.vy, p.vx);
-
-            let x = p.x;
-            let y = p.y;
-            let indice = Math.floor(x/20);
-            if (heightmap[indice] == undefined || -heightmap[indice]*20  < y) {
-                this.screen.removeChild(p);
-                window.projectiles.splice(i, 1);
-                return;
-            }
+            window.projectiles[i].update(delta);
         }
     }
 }

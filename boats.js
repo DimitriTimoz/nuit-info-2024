@@ -1,6 +1,6 @@
 import { Collidable } from "./collidable.js";
-window.boats = [];
-window.simpleObjects = [];
+window.boats = new Set();
+window.simpleObjects = new Set();
 
 function findRandomPositionOverWater() {
     let x = Math.random() * heightmap.length * 20;
@@ -16,52 +16,14 @@ var smokeTexture;
 var smokeTexture2;
 var trashTexture;
 
-export async function initBoats(app, screen) {
-    // Add movement updates to the ticker
-    app.ticker.add((delta) => {
-        for (let boat of boats) {
-            boat.move(delta.deltaTime, delta.lastTime);
-        }
-        for (let smoke of simpleObjects) {
-            smoke.move(delta.deltaTime);
-        }
-    });
-
-    croisiereTexture = await PIXI.Assets.load('/assets/croisiere.png');
-    vacheTexture = await PIXI.Assets.load('/assets/vache.png');
-    smokeTexture = await PIXI.Assets.load('/assets/smoke.png');
-    smokeTexture2 = await PIXI.Assets.load('/assets/smoke2.png');
-    trashTexture = await PIXI.Assets.load('/assets/trash.png');
-
-    for (let i = 0; i < 5; i++) {
-        // Create and initialize the croisiere boat
-        const croisiere = new PIXI.Sprite(croisiereTexture);
-        croisiere.width *= 0.5;
-        croisiere.height *= 0.5;
-        croisiere.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
-        croisiere.y = -30;
-        croisiere.anchor.set(0.5);
-        new Boat(croisiere, screen, 2, "croisiere");
-
-        // Create and initialize the vache boat
-        const vache = new PIXI.Sprite(vacheTexture);
-        vache.width *= 0.05;
-        vache.height *= 0.05;
-        vache.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
-        vache.y = -15;
-        vache.anchor.set(0.5);
-        vache.scale.x = Math.abs(vache.scale.x) * -1; // Ensure proper flip for vache
-        new Boat(vache, screen, 1, "vache");
-    }
-}
 
 export class Boat extends Collidable {
     constructor(sprite, screen, speed, ty) {
-        super(sprite);
+        super(sprite, "boat", ["bullets"]); 
         this.sprite = sprite;
         this.ty = ty;
         this.vx = speed; // Set horizontal speed
-        boats.push(this); // Add to the global boats array
+        boats.add(this); // Add boat to global array
         screen.addChild(this.sprite); // Add sprite to the screen
     }
 
@@ -116,7 +78,7 @@ export class Boat extends Collidable {
         // Remove the boat from the screen and global array
         try {
             this.sprite.parent.removeChild(this.sprite);
-            boats.splice(boats.indexOf(this), 1);    
+            boats.delete(this);
         } catch (error) {
             console.error(error);
         }
@@ -127,7 +89,7 @@ export class Smoke {
     constructor(sprite, screen, speed) {
         this.sprite = sprite;
         this.speed = speed;
-        simpleObjects.push(this);
+        simpleObjects.add(this);
         screen.addChild(this.sprite);
     }
 
@@ -136,35 +98,75 @@ export class Smoke {
         this.sprite.alpha -= 0.01 * delta;
         if (this.sprite.alpha <= 0) {
             this.sprite.parent.removeChild(this.sprite);
-            simpleObjects.splice(simpleObjects.indexOf(this), 1);
+            simpleObjects.delete(this);
         }
     }
 }
 
 export class Trash extends Collidable {
     constructor(sprite, screen, speed) {
-        super(sprite);
+        super(sprite, "trash", ["fish"]);
         this.sprite = sprite;
         this.speed = speed;
-        simpleObjects.push(this);
+        this.screen = screen;
+        simpleObjects.add(this);
         screen.addChild(this.sprite);
     }
 
     move(delta) {
         let nextY = this.sprite.y + this.speed * delta;
         if (!isInWater(this.sprite.x, nextY + 40)) {
-            simpleObjects.splice(simpleObjects.indexOf(this), 1);
+            simpleObjects.delete(this);
         }
         this.sprite.y = nextY;
     }
 
     onCollision(object) {
-        try {
-            this.sprite.parent.removeChild(this.sprite);
-            simpleObjects.splice(simpleObjects.indexOf(this), 1);    
-        } catch (error) {
-            console.error(error);
-            
+        this.destroy();        
+    }
+
+    destroy() {
+        this.screen.removeChild(this.sprite);
+        simpleObjects.delete(this);
+    }
+}
+
+
+export async function initBoats(app, screen) {
+    // Add movement updates to the ticker
+    app.ticker.add((delta) => {
+        for (let boat of boats) {
+            boat.move(delta.deltaTime, delta.lastTime);
         }
+        for (let smoke of simpleObjects) {
+            smoke.move(delta.deltaTime);
+        }
+    });
+
+    croisiereTexture = await PIXI.Assets.load('/assets/croisiere.png');
+    vacheTexture = await PIXI.Assets.load('/assets/vache.png');
+    smokeTexture = await PIXI.Assets.load('/assets/smoke.png');
+    smokeTexture2 = await PIXI.Assets.load('/assets/smoke2.png');
+    trashTexture = await PIXI.Assets.load('/assets/trash.png');
+
+    for (let i = 0; i < 5; i++) {
+        // Create and initialize the croisiere boat
+        const croisiere = new PIXI.Sprite(croisiereTexture);
+        croisiere.width *= 0.5;
+        croisiere.height *= 0.5;
+        croisiere.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
+        croisiere.y = -30;
+        croisiere.anchor.set(0.5);
+        new Boat(croisiere, screen, 2, "croisiere");
+
+        // Create and initialize the vache boat
+        const vache = new PIXI.Sprite(vacheTexture);
+        vache.width *= 0.05;
+        vache.height *= 0.05;
+        vache.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
+        vache.y = -15;
+        vache.anchor.set(0.5);
+        vache.scale.x = Math.abs(vache.scale.x) * -1; // Ensure proper flip for vache
+        new Boat(vache, screen, 1, "vache");
     }
 }

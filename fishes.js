@@ -1,4 +1,5 @@
-var fishes = [];
+import { Collidable } from "./collidable.js";
+var fishes = new Set();
 
 export async function initFishes(app, screen) {
     app.ticker.add((delta) => {
@@ -31,12 +32,14 @@ export async function initFishes(app, screen) {
     }
 }
 
-export class Fish {
+export class Fish extends Collidable {
     constructor(sprite, screen, speed) {
+        super(sprite, "fish",  []);
         this.sprite = sprite;
         this.speed = speed;
+        this.screen = screen;
         this.changeSteer();
-        fishes.push(this);
+        fishes.add(this);
         screen.addChild(this.sprite);
     }
 
@@ -70,6 +73,15 @@ export class Fish {
             this.sprite.y = newY;
         }
     }
+
+    onCollision(object) {
+        try {
+            this.sreen.removeChild(this.sprite);
+            fishes.delete(this);
+
+        } catch (error) {
+            
+        }
+        
+    }
 }
-
-
