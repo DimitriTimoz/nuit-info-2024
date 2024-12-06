@@ -9,18 +9,16 @@ export class Submarine {
         this.projectileTexture = projectileTexture;
         this.sprite.scale.x = 0.1;
         this.sprite.scale.y = 0.1;
-        this.set_sprite_middle();
+        this.sprite.x = -this.screen.x + this.app.screen.width / 2;
+        this.sprite.y = -this.screen.y + this.app.screen.height / 2;
+        this.sprite.anchor.set(0.5);
 
         this.app.ticker.add(delta => {
             this.updateProjectiles(delta.deltaTime);
         } );
     }
 
-    set_sprite_middle() {
-        this.sprite.anchor.set(0.5, 0.5);
-        this.sprite.x = this.app.screen.width / 2;
-        this.sprite.y = this.app.screen.height / 2;
-    }
+
 
     move(keys) {
         let dx = 0;
@@ -52,20 +50,22 @@ export class Submarine {
             dy *= multiplier;
 
             // Check collisions
-            let x = this.sprite.x - this.screen.x - dx;
-            let y = this.sprite.y - this.screen.y - dy;
-
             // Draw a pixel
-            let indice = Math.floor(x/20);
+            let indice = Math.floor(this.sprite.x/20);
+            let y = this.sprite.y;
             if (heightmap[indice] == undefined || -heightmap[indice]*20 <= y) {
                 return;
             }
+            
+            if (y < 0 && dy > 0) {
+                dy = 0;
+            }
+           
             this.screen.x += dx;
             this.screen.y += dy;
-            
-            if (this.sprite.y < this.screen.y) {
-                this.screen.y = this.sprite.y;
-            }
+            this.sprite.x -= dx;
+            this.sprite.y -= dy;
+
             
             if (dx < 0) {
                 this.sprite.scale.x = Math.abs(this.sprite.scale.x);
@@ -84,21 +84,21 @@ export class Submarine {
         projectile.width *= 0.1;
         projectile.height *= 0.1;
         projectile.onCollision = (object) => {
-            this.app.stage.removeChild(projectile);
+            this.screen.removeChild(projectile);
             window.projectiles.splice(window.projectiles.indexOf(projectile), 1);
         };
-        //projectile.anchor.set(0.5);
-        projectile.x = this.sprite.x;
+        projectile.anchor.set(0.5);
+        projectile.x = this.sprite.x 
         projectile.y = this.sprite.y;
 
         // Get the angle
-        let rel_x = x - this.sprite.x;
-        let rel_y = y - this.sprite.y;
+        let rel_x = x;
+        let rel_y = y ;
         const angle = Math.atan2(rel_y, rel_x);
 
         projectile.vx = Math.cos(angle) * 10;
         projectile.vy = Math.sin(angle) * 10;
-        this.app.stage.addChild(projectile);
+        this.screen.addChild(projectile);
         window.projectiles.push(projectile);
     }   
 
@@ -111,8 +111,9 @@ export class Submarine {
             p.vx *= 0.99;
             p.rotation = Math.atan2(p.vy, p.vx);
 
-            let x = p.x - this.screen.x ;
-            let y = p.y - this.screen.y;
+            let x = p.x;
+            let y = p.y;
+            console.log(x, y);
             let indice = Math.floor(x/20);
             if (heightmap[indice] == undefined || -heightmap[indice]*20  < y) {
                 this.app.stage.removeChild(p);
