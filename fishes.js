@@ -69,7 +69,7 @@ export async function initFishes(app, screen) {
 
 export class Fish extends Collidable {
     constructor(sprite, screen, speed) {
-        super(sprite, "fish",  []);
+        super(sprite, "fish",  ["trash"]);
         this.sprite = sprite;
         this.speed = speed;
         this.screen = screen;
@@ -110,13 +110,16 @@ export class Fish extends Collidable {
     }
 
     onCollision(object) {
-        try {
-            this.sreen.removeChild(this.sprite);
-            fishes.delete(this);
+       for (let enemy of this.enenemies) {
+           if (object.me == enemy) {
+               this.destroy();
+               break;
+           }
+       }
+    }
 
-        } catch (error) {
-            
-        }
-        
+    destroy() {
+        this.screen.removeChild(this.sprite);
+        fishes.delete(this);
     }
 }

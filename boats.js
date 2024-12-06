@@ -71,6 +71,7 @@ export class Boat extends Collidable {
         super(sprite, "boat", ["bullets"]); 
         this.sprite = sprite;
         this.ty = ty;
+        this.screen = screen;
         this.vx = speed; // Set horizontal speed
         boats.add(this); // Add boat to global array
         screen.addChild(this.sprite); // Add sprite to the screen
@@ -124,13 +125,16 @@ export class Boat extends Collidable {
     }
 
     onCollision(object) {
-        // Remove the boat from the screen and global array
-        try {
-            this.sprite.parent.removeChild(this.sprite);
-            boats.delete(this);
-        } catch (error) {
-            console.error(error);
+        for (let enemy of this.enenemies) {
+            if (object.me == enemy) {
+                this.destroy();
+            }
         }
+    }
+
+    destroy() {
+        this.screen.removeChild(this.sprite);
+        boats.delete(this);
     }
 }
 
@@ -154,7 +158,7 @@ export class Smoke {
 
 export class Trash extends Collidable {
     constructor(sprite, screen, speed) {
-        super(sprite, "trash", ["fish"]);
+        super(sprite, "trash", ["bullets"]);
         this.sprite = sprite;
         this.speed = speed;
         this.screen = screen;
@@ -171,11 +175,17 @@ export class Trash extends Collidable {
     }
 
     onCollision(object) {
-        this.destroy();        
+        for (let enemy of this.enenemies) {
+            if (object.me == enemy) {
+                this.destroy();
+                break;
+            }
+        }
     }
 
     destroy() {
         this.screen.removeChild(this.sprite);
         simpleObjects.delete(this);
+        boats.delete(this);
     }
 }

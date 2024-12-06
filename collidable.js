@@ -20,14 +20,7 @@ export class Collidable {
 
     checkCollision() { 
         let list = new Set();
-        if (this.enenemies == undefined) {
-            return;
-        }
-
         for (let key of this.enenemies) {
-            if (this.me == "boat" && key == "bullets") {
-                console.log("boat");
-            }
             if (key in collidable_objects) {
                 list = list.union(collidable_objects[key]);
             }
@@ -36,18 +29,15 @@ export class Collidable {
         for (let obj of list) {
             // Adjust bullet positions relative to the screen
             let bound = this.sprite.getBounds();
-            if (this.me == "boat") {
-                console.log("boat");
-            }
             let bound2 = obj.sprite.getBounds();
             if (bound.x < bound2.x + bound2.width &&
                 bound.x + bound.width > bound2.x &&
                 bound.y < bound2.y + bound2.height &&
                 bound.y + bound.height > bound2.y) {
-
-                collidable_objects[this.me].delete(this);
+                console.log("Collision detected");
                 obj.onCollision(this); 
                 this.onCollision(obj);
+                collidable_objects[this.me].delete(this);
             }
         }
     }
@@ -58,9 +48,6 @@ export class Collidable {
 
     static checkCollisions() {
         for (let key in collidable_objects) {
-            if (key == "boat") {
-                console.log("boat");
-            }
             for (let obj of collidable_objects[key]) {
                 obj.checkCollision();
             }
