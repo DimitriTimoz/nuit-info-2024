@@ -13,7 +13,7 @@
       import { initKelp } from "/ground.js";
       import { initClouds } from "/clouds.js";
       import { initCollidable } from "/collidable.js";
-      import { Bullet } from '/bullet.js';
+      import { Bullet, initBullets } from '/bullet.js';
 
       import { doInterpolate, linspace } from "/splines/spline.js";
 
@@ -79,6 +79,7 @@
       initClouds(app, screen);
       initKelp(screen);
       initCollidable(app);
+      await initBullets(app);
 
       const keys = new Set();
 

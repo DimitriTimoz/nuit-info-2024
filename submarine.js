@@ -1,7 +1,5 @@
 import { Bullet } from '/bullet.js';
 
-window.projectiles = []; // tableau pour stocker les tirs
-
 export class Submarine {
     constructor(app, screen, sprite, projectileTexture) {
         this.sprite = sprite;
@@ -14,10 +12,6 @@ export class Submarine {
         this.sprite.x = -this.screen.x + this.app.screen.width / 2;
         this.sprite.y = -this.screen.y + this.app.screen.height / 2;
         this.sprite.anchor.set(0.5);
-
-        this.app.ticker.add(delta => {
-            this.updateProjectiles(delta.deltaTime);
-        } );
     }
 
     move(keys) {
@@ -83,12 +77,6 @@ export class Submarine {
             let angle = Math.atan2(y, x);
             new Bullet(this.screen, this.projectileTexture, this.sprite.x, this.sprite.y,  angle);
             this.lastFire = Date.now();    
-        }
-    }
-
-    updateProjectiles(delta) {
-        for (let i = window.projectiles.length - 1; i >= 0; i--) {
-            window.projectiles[i].update(delta);
         }
     }
 }

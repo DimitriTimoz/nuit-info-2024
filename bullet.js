@@ -1,6 +1,14 @@
 
 import { Collidable } from '/collidable.js';
 
+let projectiles = new Set();
+
+export async function initBullets(app) {
+    app.ticker.add((delta) => {
+        Bullet.updateProjectiles(delta.deltaTime);
+    });
+}
+
 export class Bullet extends Collidable {
     constructor(screen, texture, x, y, angle) {
         const sprite = new PIXI.Sprite(texture);
@@ -10,7 +18,7 @@ export class Bullet extends Collidable {
         sprite.x = x;
         sprite.y = y;
 
-        super(sprite, "bullets", []);
+        super(sprite, "bullets", ["trash", "boat"]);
         this.screen = screen;
         this.vx = Math.cos(angle) * 12;
         this.vy = Math.sin(angle) * 12;
@@ -18,7 +26,7 @@ export class Bullet extends Collidable {
 
         screen.addChild(sprite);
 
-        window.projectiles.push(this);
+        projectiles.add(this);
     }
 
     update(delta) {
@@ -51,9 +59,12 @@ export class Bullet extends Collidable {
 
     destroy() {
         this.screen.removeChild(this.sprite);
-        let index = window.projectiles.indexOf(this);
-        if (index > -1) {
-            window.projectiles.splice(index, 1);
+        projectiles.delete(this);
+    }
+
+    static updateProjectiles(delta) {
+        for (let projectile of projectiles) {
+            projectile.update(delta);
         }
     }
 }
