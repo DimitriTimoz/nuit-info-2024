@@ -27,9 +27,7 @@ export class Submarine {
 
         this.lightMask.drawCircle(this.app.screen.width / 2, this.app.screen.height / 2, 200);
         this.lightMask.cut();
-    //    this.lightMask.drawCircle(this.app.screen.width / 2, this.app.screen.height / 2, 200);
         this.lightMask.endFill();
-        this.updateLightMask();
 
         // Apply the mask to the dark overlay
         this.dark.mask = this.lightMask;
