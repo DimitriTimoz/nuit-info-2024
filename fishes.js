@@ -10,6 +10,13 @@ export async function initFishes(app, screen) {
 
     const baleineTexture = await PIXI.Assets.load('/assets/baleine.png');
     const fishTexture = await PIXI.Assets.load('/assets/fish.png');
+    const fishTexture2 = await PIXI.Assets.load('/assets/fish2.png');
+    const fishTexture3 = await PIXI.Assets.load('/assets/fish3.png');
+    const fishTexture4 = await PIXI.Assets.load('/assets/fish4.png');
+    const fishTexture5 = await PIXI.Assets.load('/assets/fish5.png');
+    const fishTexture6 = await PIXI.Assets.load('/assets/fish6.png');
+    const fishTexture7 = await PIXI.Assets.load('/assets/fish7.png');
+    const fishTexture8 = await PIXI.Assets.load('/assets/fish8.png');
 
     const baleine = new PIXI.Sprite(baleineTexture);
     baleine.width *= 0.3;
@@ -21,9 +28,37 @@ export async function initFishes(app, screen) {
     new Fish(baleine, screen, 3);
 
     for (let i = 0; i < 100; i++) {
-        const miniFish = new PIXI.Sprite(fishTexture);
-        miniFish.width *= 0.1;
-        miniFish.height *= 0.1;
+        let randomTexture;
+        switch (Math.floor(Math.random() * 8)) {
+            case 0:
+                randomTexture = fishTexture;
+                break;
+            case 1:
+                randomTexture = fishTexture2;
+                break;
+            case 2:
+                randomTexture = fishTexture3;
+                break;
+            case 3:
+                randomTexture = fishTexture4;
+                break;
+            case 4:
+                randomTexture = fishTexture5;
+                break;
+            case 5:
+                randomTexture = fishTexture6;
+                break;
+            case 6:
+                randomTexture = fishTexture7;
+                break;
+            case 7:
+                randomTexture = fishTexture8;
+                break;
+        }
+
+        const miniFish = new PIXI.Sprite(randomTexture);
+        miniFish.width *= 0.3;
+        miniFish.height *= 0.3;
         let [x, y] = findRandomPositionInWater();
         miniFish.x = x;
         miniFish.y = y;
@@ -52,11 +87,11 @@ export class Fish extends Collidable {
         this.vy *= multiplier;
 
         if (this.vx < 0) {
-            if (this.sprite.scale.x < 0) {
+            if (this.sprite.scale.x > 0) {
                 this.sprite.scale.x = -this.sprite.scale.x;
             }
         } else {
-            if (this.sprite.scale.x > 0) {
+            if (this.sprite.scale.x < 0) {
                 this.sprite.scale.x = -this.sprite.scale.x;
             }
         }

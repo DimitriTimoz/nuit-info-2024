@@ -80,7 +80,6 @@
       initClouds(app, screen);
       initKelp(screen);
       initCollidable(app);
-      initIndicators(app, screen);
 
       const keys = new Set();
 
@@ -105,7 +104,7 @@
       
       let submarine_sprite = PIXI.Sprite.from('assets/submarine.png');
       let submarine = new Submarine(app, screen, submarine_sprite, bullet_asset);
-
+    
       screen.addChild(submarine_sprite);
       screen.hitArea = new PIXI.Rectangle(-heightmap.length*20, - app.screen.height*4, heightmap.length*20*2, app.screen.height*8);
 
