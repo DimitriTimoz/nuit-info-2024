@@ -23,6 +23,7 @@ function spawnCroisiereBoat(screen) {
     croisiere.x = (30 + Math.random() * (heightmap.length - 30)) * 20;
     croisiere.y = -30;
     croisiere.anchor.set(0.5);
+    croisiere.scale.x = Math.abs(croisiere.scale.x) * -1; // Ensure proper flip for vache
     new Boat(croisiere, screen, 2, "croisiere");
 }
 
