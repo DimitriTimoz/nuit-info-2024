@@ -19,7 +19,7 @@
       import { doInterpolate, linspace } from "./splines/spline.js";
 
       const n_points = 300
-      const deepness_scale = 50
+      const deepness_scale = 80
 
       function isInWater(x, y) {
         let Xidx = Math.floor(x / 20);
@@ -47,7 +47,7 @@
       screen.interactive = true;
       screen.buttonMode = true;
 
-      screen.x = -600
+      screen.x = -900
       app.renderer.background.color = 0x87CEEB;  // Bleu ciel plus naturel
 
       document.body.appendChild(app.canvas);
