@@ -12,7 +12,7 @@ function findRandomPositionOverWater() {
 
 var croisiereTexture;
 var vacheTexture;
-var smokeTexture;
+export var smokeTexture;
 var smokeTexture2;
 var trashTexture;
 

@@ -12,6 +12,7 @@
       import { initBoats, Boat } from "/boats.js";
       import { initKelp } from "/ground.js";
       import { initClouds } from "/clouds.js";
+      import { initOilRigs } from "/platform.js";
       import { initCollidable } from "/collidable.js";
       import { Bullet, initBullets } from '/bullet.js';
 
@@ -77,6 +78,7 @@
       initFishes(app, screen);
       initBoats(app, screen);
       initClouds(app, screen);
+      initOilRigs(app, screen);
       initKelp(screen);
       initCollidable(app);
       await initBullets(app);
