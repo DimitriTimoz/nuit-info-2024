@@ -68,7 +68,7 @@ export class Boat extends Collidable {
     move(delta, time) {
         if (this.ty == "croisiere") {
             if (this.lastSmoke == undefined || time - this.lastSmoke > 200) {
-                this.lastSmoke = time;
+                this.lastSmoke = time + Math.random() * 100;
                 const smoke = new PIXI.Sprite(smokeTexture);
                 smoke.width *= 0.5;
                 smoke.height *= 0.5;
@@ -77,7 +77,7 @@ export class Boat extends Collidable {
                 smoke.anchor.set(0.5);
                 new Smoke(smoke, this.sprite.parent, 1);
             } else if (this.lastTrash == undefined || time - this.lastTrash > 10000) {
-                this.lastTrash = time;
+                this.lastTrash = time + Math.random() * 5000;
                 const trash = new PIXI.Sprite(trashTexture);
                 trash.width *= 0.1;
                 trash.height *= 0.1;
@@ -87,7 +87,7 @@ export class Boat extends Collidable {
                 new Trash(trash, this.sprite.parent, 1);
             }
         } else if (this.ty == "vache" && (this.lastSmoke == undefined || time - this.lastSmoke > 2000)) {
-            this.lastSmoke = time;
+            this.lastSmoke = time + Math.random() * 1000;
             const smoke = new PIXI.Sprite(smokeTexture2);
             smoke.width *= 0.25;
             smoke.height *= 0.25;
