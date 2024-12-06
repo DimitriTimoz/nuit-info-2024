@@ -1,22 +1,22 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="./styles/main.css">
     <script src="https://pixijs.download/release/pixi.min.js"></script>
   </head>
   <body>
     <script type="module">
-      import { drawWorld } from "/world.js";
-      import { Submarine } from "/submarine.js";
-      import { initFishes, Fish } from "/fishes.js";
-      import { initBoats, Boat } from "/boats.js";
-      import { initKelp } from "/ground.js";
-      import { initClouds } from "/clouds.js";
-      import { initOilRigs } from "/platform.js";
-      import { initCollidable } from "/collidable.js";
+      import { drawWorld } from "./world.js";
+      import { Submarine } from "./submarine.js";
+      import { initFishes, Fish } from "./fishes.js";
+      import { initBoats, Boat } from "./boats.js";
+      import { initKelp } from "./ground.js";
+      import { initClouds } from "./clouds.js";
+      import { initOilRigs } from "./platform.js";
+      import { initCollidable } from "./collidable.js";
       import { Bullet, initBullets } from '/bullet.js';
 
-      import { doInterpolate, linspace } from "/splines/spline.js";
+      import { doInterpolate, linspace } from "./splines/spline.js";
 
       const n_points = 300
       const deepness_scale = 50
