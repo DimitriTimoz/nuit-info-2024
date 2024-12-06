@@ -1,22 +1,76 @@
 import { Collidable } from "./collidable.js";
 var fishes = new Set();
 
+var baleineTexture;
+var fishTexture;
+var fishTexture2;
+var fishTexture3;
+var fishTexture4;
+var fishTexture5;
+var fishTexture6;
+var fishTexture7;
+var fishTexture8;
+
+function spawnFish(screen) {
+    let randomTexture;
+    switch (Math.floor(Math.random() * 8)) {
+        case 0:
+            randomTexture = fishTexture;
+            break;
+        case 1:
+            randomTexture = fishTexture2;
+            break;
+        case 2:
+            randomTexture = fishTexture3;
+            break;
+        case 3:
+            randomTexture = fishTexture4;
+            break;
+        case 4:
+            randomTexture = fishTexture5;
+            break;
+        case 5:
+            randomTexture = fishTexture6;
+            break;
+        case 6:
+            randomTexture = fishTexture7;
+            break;
+        case 7:
+            randomTexture = fishTexture8;
+            break;
+    }
+
+    const miniFish = new PIXI.Sprite(randomTexture);
+    miniFish.width *= 0.3;
+    miniFish.height *= 0.3;
+    let [x, y] = findRandomPositionInWater();
+    miniFish.x = x;
+    miniFish.y = y;
+    miniFish.anchor.set(0.5);
+    new Fish(miniFish, screen, 2);
+}
+
 export async function initFishes(app, screen) {
+    let lastSpawn = 0;
     app.ticker.add((delta) => {
+        if (lastSpawn + 5000 < delta.lastTime && fishes.size < 100) {
+            spawnFish(screen);
+            lastSpawn = delta.lastTime;
+        }
         for (let fish of fishes) {
             fish.move(delta.deltaTime);
         }
     });
 
-    const baleineTexture = await PIXI.Assets.load('/assets/baleine.png');
-    const fishTexture = await PIXI.Assets.load('/assets/fish.png');
-    const fishTexture2 = await PIXI.Assets.load('/assets/fish2.png');
-    const fishTexture3 = await PIXI.Assets.load('/assets/fish3.png');
-    const fishTexture4 = await PIXI.Assets.load('/assets/fish4.png');
-    const fishTexture5 = await PIXI.Assets.load('/assets/fish5.png');
-    const fishTexture6 = await PIXI.Assets.load('/assets/fish6.png');
-    const fishTexture7 = await PIXI.Assets.load('/assets/fish7.png');
-    const fishTexture8 = await PIXI.Assets.load('/assets/fish8.png');
+    baleineTexture = await PIXI.Assets.load('/assets/baleine.png');
+    fishTexture = await PIXI.Assets.load('/assets/fish.png');
+    fishTexture2 = await PIXI.Assets.load('/assets/fish2.png');
+    fishTexture3 = await PIXI.Assets.load('/assets/fish3.png');
+    fishTexture4 = await PIXI.Assets.load('/assets/fish4.png');
+    fishTexture5 = await PIXI.Assets.load('/assets/fish5.png');
+    fishTexture6 = await PIXI.Assets.load('/assets/fish6.png');
+    fishTexture7 = await PIXI.Assets.load('/assets/fish7.png');
+    fishTexture8 = await PIXI.Assets.load('/assets/fish8.png');
 
     const baleine = new PIXI.Sprite(baleineTexture);
     baleine.width *= 0.3;
@@ -28,42 +82,7 @@ export async function initFishes(app, screen) {
     new Fish(baleine, screen, 3);
 
     for (let i = 0; i < 100; i++) {
-        let randomTexture;
-        switch (Math.floor(Math.random() * 8)) {
-            case 0:
-                randomTexture = fishTexture;
-                break;
-            case 1:
-                randomTexture = fishTexture2;
-                break;
-            case 2:
-                randomTexture = fishTexture3;
-                break;
-            case 3:
-                randomTexture = fishTexture4;
-                break;
-            case 4:
-                randomTexture = fishTexture5;
-                break;
-            case 5:
-                randomTexture = fishTexture6;
-                break;
-            case 6:
-                randomTexture = fishTexture7;
-                break;
-            case 7:
-                randomTexture = fishTexture8;
-                break;
-        }
-
-        const miniFish = new PIXI.Sprite(randomTexture);
-        miniFish.width *= 0.3;
-        miniFish.height *= 0.3;
-        let [x, y] = findRandomPositionInWater();
-        miniFish.x = x;
-        miniFish.y = y;
-        miniFish.anchor.set(0.5);
-        new Fish(miniFish, screen, 2);
+        spawnFish(screen);
     }
 }
 
