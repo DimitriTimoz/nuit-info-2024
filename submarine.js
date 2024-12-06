@@ -79,9 +79,12 @@ export class Submarine {
     }
 
     fire(x, y) {
-        let angle = Math.atan2(y, x);
-        new Bullet(this.screen, this.projectileTexture, this.sprite.x, this.sprite.y,  angle);
-    }   
+        if (this.lastFire == undefined || Date.now() - this.lastFire > 500) {
+            let angle = Math.atan2(y, x);
+            new Bullet(this.screen, this.projectileTexture, this.sprite.x, this.sprite.y,  angle);
+            this.lastFire = Date.now();    
+        }
+    }
 
     updateProjectiles(delta) {
         for (let i = window.projectiles.length - 1; i >= 0; i--) {
